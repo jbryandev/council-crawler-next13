@@ -37,7 +37,7 @@ function AgencyList({ agencies, selectedAgency, setSelectedAgency }) {
   const items = agencies.map((agency) => (
     <li
       key={agency.id}
-      className={`block mt-2 first:mt-0 p-5 rounded-lg cursor-pointer ${
+      className={`block mt-2 first:mt-0 p-5 rounded-lg cursor-pointer font-medium ${
         selectedAgency === agency
           ? 'bg-blue-700 hover:bg-blue-700/95 text-slate-50 dark:bg-blue-800 dark:hover:bg-blue-800/90'
           : 'hover:bg-slate-300/50 dark:hover:bg-slate-800'
