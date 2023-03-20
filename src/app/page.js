@@ -1,91 +1,99 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import styles from './page.module.css'
+'use client';
 
-const inter = Inter({ subsets: ['latin'] })
+import { agendas, agencies } from '@/utils/data';
+import { useState } from 'react';
 
-export default function Home() {
+export default function Page() {
+  return <AgendaViewer agencies={agencies} agendas={agendas} />;
+}
+
+function AgendaViewer({ agencies, agendas }) {
+  const [selectedAgency, setSelectedAgency] = useState();
+  const [selectedAgenda, setSelectedAgenda] = useState();
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
+    <>
+      <section className='grid sm:grid-cols-2 gap-2 m-5'>
+        <AgencyList
+          agencies={agencies}
+          selectedAgency={selectedAgency}
+          setSelectedAgency={setSelectedAgency}
         />
-        <div className={styles.thirteen}>
-          <Image src="/thirteen.svg" alt="13" width={40} height={31} priority />
-        </div>
-      </div>
+        <AgendaList
+          agency={selectedAgency}
+          agendas={agendas}
+          selectedAgenda={selectedAgenda}
+          setSelectedAgenda={setSelectedAgenda}
+        />
+      </section>
+      <section>
+        <AgendaDisplay agency={selectedAgency} agenda={selectedAgenda} />
+      </section>
+    </>
+  );
+}
 
-      <div className={styles.grid}>
-        <a
-          href="https://beta.nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
+function AgencyList({ agencies, selectedAgency, setSelectedAgency }) {
+  const items = agencies.map((agency) => (
+    <li
+      key={agency.id}
+      className={`block mt-2 first:mt-0 p-5 rounded-lg cursor-pointer ${
+        selectedAgency === agency
+          ? 'bg-blue-700 hover:bg-blue-700/95 text-slate-50 dark:bg-blue-800 dark:hover:bg-blue-800/90'
+          : 'hover:bg-slate-300/50 dark:hover:bg-slate-800'
+      }`}
+      onClick={() => {
+        setSelectedAgency(agency);
+      }}
+    >
+      {agency.name}
+    </li>
+  ));
+  return <ul>{items}</ul>;
+}
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>Explore the Next.js 13 playground.</p>
-        </a>
+function AgendaList({ agency, agendas, selectedAgenda, setSelectedAgenda }) {
+  const filteredAgendas = agendas.filter(
+    (agenda) => agenda.agency === agency?.id
+  );
 
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+  const items = filteredAgendas.map((agenda) => (
+    <li
+      key={agenda.id}
+      className={`block mt-2 first:mt-0 p-5 rounded-lg cursor-pointer font-medium ${
+        selectedAgenda === agenda
+          ? 'bg-blue-700 hover:bg-blue-700/95 text-slate-50 dark:bg-blue-800 dark:hover:bg-blue-800/90'
+          : 'hover:bg-slate-300/50 dark:hover:bg-slate-800'
+      } `}
+      onClick={() => {
+        setSelectedAgenda(agenda);
+      }}
+    >
+      {FormatDate(agenda.date, 'short')} - {agenda.title}
+    </li>
+  ));
+  return <ul>{items}</ul>;
+}
+
+function AgendaDisplay({ agenda }) {
+  if (agenda) {
+    return (
+      <section className='m-5 p-5 bg-slate-50 dark:bg-slate-800 rounded-lg'>
+        <h1 className='text-3xl font-semibold mt-5 mb-10'>
+          {FormatDate(agenda.date)} - {agenda.title}
+        </h1>
+        <p className='whitespace-pre-line text-justify max-w-prose'>
+          {agenda.content}
+        </p>
+      </section>
+    );
+  } else {
+    return null;
+  }
+}
+
+function FormatDate(date, format) {
+  return new Date(date).toLocaleDateString('en-us', {
+    dateStyle: format || 'long',
+  });
 }
