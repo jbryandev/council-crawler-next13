@@ -20,26 +20,40 @@ export default function Page() {
 }
 
 function AgendaViewer({ agencies, agendas }) {
-  const [selectedAgency, setSelectedAgency] = useState();
-  const [selectedAgenda, setSelectedAgenda] = useState();
+  const [selectedAgency, setSelectedAgency] = useState(agencies[0]);
+  const [selectedAgenda, setSelectedAgenda] = useState(agendas[0]);
 
   return (
     <>
-      <section className='grid sm:grid-cols-2 xl:grid-cols-4 gap-3 m-3'>
-        <AgencyList
-          agencies={agencies}
-          selectedAgency={selectedAgency}
-          setSelectedAgency={setSelectedAgency}
-        />
-        <AgendaList
-          agency={selectedAgency}
-          agendas={agendas}
-          selectedAgenda={selectedAgenda}
-          setSelectedAgenda={setSelectedAgenda}
-        />
-        <div className='sm:col-span-2'>
-          <AgendaDisplay agency={selectedAgency} agenda={selectedAgenda} />
+      <nav className='flex gap-3 xl:hidden m-3'>
+        <div
+          className={`p-5 rounded-lg cursor-pointer font-medium  ${styles.active}`}
+        >
+          {selectedAgency.name}
         </div>
+        {selectedAgenda && (
+          <div
+            className={`p-5 rounded-lg cursor-pointer font-medium  ${styles.active}`}
+          >
+            {FormatDate(selectedAgenda.date)}
+          </div>
+        )}
+      </nav>
+      <section className='grid gap-3 m-3 xl:grid-cols-2'>
+        <menu className='hidden xl:grid xl:grid-cols-2 gap-3'>
+          <AgencyList
+            agencies={agencies}
+            selectedAgency={selectedAgency}
+            setSelectedAgency={setSelectedAgency}
+          />
+          <AgendaList
+            agency={selectedAgency}
+            agendas={agendas}
+            selectedAgenda={selectedAgenda}
+            setSelectedAgenda={setSelectedAgenda}
+          />
+        </menu>
+        <AgendaDisplay agency={selectedAgency} agenda={selectedAgenda} />
       </section>
     </>
   );
