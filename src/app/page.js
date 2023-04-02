@@ -22,23 +22,27 @@ export default function Page() {
 function AgendaViewer({ agencies, agendas }) {
   const [selectedAgency, setSelectedAgency] = useState(agencies[0]);
   const [selectedAgenda, setSelectedAgenda] = useState(agendas[0]);
+  const [activeMenu, setActiveMenu] = useState('agency');
 
   return (
     <>
-      <header className='flex gap-3 xl:hidden m-3 items-center'>
-        <NavMenu
-          agencies={agencies}
-          selectedAgency={selectedAgency}
-          setSelectedAgency={setSelectedAgency}
-        />
-        <h1 className={`px-5 font-medium`}>{selectedAgency.name}</h1>
-      </header>
+      <MobileNav
+        agencies={agencies}
+        agendas={agendas}
+        selectedAgency={selectedAgency}
+        setSelectedAgency={setSelectedAgency}
+        selectedAgenda={selectedAgenda}
+        setSelectedAgenda={setSelectedAgenda}
+        activeMenu={activeMenu}
+        setActiveMenu={setActiveMenu}
+      />
       <section className='grid gap-3 m-3 xl:grid-cols-2'>
         <menu className='hidden xl:grid xl:grid-cols-2 gap-3'>
           <AgencyList
             agencies={agencies}
             selectedAgency={selectedAgency}
             setSelectedAgency={setSelectedAgency}
+            setActiveMenu={setActiveMenu}
           />
           <AgendaList
             agency={selectedAgency}
@@ -53,34 +57,73 @@ function AgendaViewer({ agencies, agendas }) {
   );
 }
 
-function NavMenu({ agencies, selectedAgency, setSelectedAgency }) {
+function MobileNav({
+  agencies,
+  agendas,
+  selectedAgency,
+  setSelectedAgency,
+  selectedAgenda,
+  setSelectedAgenda,
+  activeMenu,
+  setActiveMenu,
+}) {
   const [open, setOpen] = useState(false);
+
   return (
-    <>
-      <menu
+    <nav className='xl:hidden flex gap-3 m-3 items-center'>
+      <button
         className={`z-10 p-5 rounded-lg cursor-pointer font-medium ${
           open ? styles.inactive : styles.active
         }`}
         onClick={() => setOpen(!open)}
       >
         Menu
-      </menu>
-      <div
-        className={`bg-slate-50 dark:bg-slate-900 ${
-          open ? 'flex' : 'hidden'
-        } absolute top-[74px] left-0 p-3 rounded-lg font-medium bg-slate-50`}
+      </button>
+      <h1 className='px-5 font-medium'>{selectedAgency.name}</h1>
+      <menu
+        name='agency'
+        className={`${
+          open && activeMenu === 'agency' ? 'flex' : 'hidden'
+        } absolute top-16 p-3 mt-3 rounded-lg border-solid border-2 border-slate-400 font-medium bg-slate-200 dark:bg-slate-900 `}
       >
         <AgencyList
           agencies={agencies}
           selectedAgency={selectedAgency}
           setSelectedAgency={setSelectedAgency}
+          setActiveMenu={setActiveMenu}
         />
-      </div>
-    </>
+      </menu>
+      <menu
+        name='agenda'
+        className={`${
+          open && activeMenu === 'agenda' ? 'flex flex-col' : 'hidden'
+        } absolute top-16 p-3 mt-3 rounded-lg border-solid border-2 border-slate-400 font-medium bg-slate-200 dark:bg-slate-900 `}
+      >
+        <button
+          className={`block my-3 first:mt-0 p-5 rounded-lg cursor-pointer font-medium ${styles.inactive}`}
+          onClick={() => {
+            setActiveMenu('agency');
+          }}
+        >
+          {selectedAgency.name}
+        </button>
+        <AgendaList
+          agency={selectedAgency}
+          agendas={agendas}
+          selectedAgenda={selectedAgenda}
+          setSelectedAgenda={setSelectedAgenda}
+        />
+      </menu>
+    </nav>
   );
 }
 
-function AgencyList({ agencies, selectedAgency, setSelectedAgency }) {
+function AgencyList({
+  agencies,
+  selectedAgency,
+  setSelectedAgency,
+  setActiveMenu,
+}) {
   const items = agencies.map((agency) => (
     <li
       key={agency.id}
@@ -89,6 +132,7 @@ function AgencyList({ agencies, selectedAgency, setSelectedAgency }) {
       }`}
       onClick={() => {
         setSelectedAgency(agency);
+        setActiveMenu('agenda');
       }}
     >
       {agency.name}
@@ -108,9 +152,7 @@ function AgendaList({ agency, agendas, selectedAgenda, setSelectedAgenda }) {
       className={`block mt-3 first:mt-0 p-5 rounded-lg cursor-pointer font-medium ${
         selectedAgenda === agenda ? styles.active : styles.inactive
       } `}
-      onClick={() => {
-        setSelectedAgenda(agenda);
-      }}
+      onClick={() => setSelectedAgenda(agenda)}
     >
       {FormatDate(agenda.date, 'short')} - {agenda.title}
     </li>
