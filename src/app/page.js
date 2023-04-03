@@ -3,18 +3,6 @@
 import { agendas, agencies } from '@/utils/data';
 import { useState } from 'react';
 
-const styles = {
-  active:
-    'bg-blue-700 hover:bg-blue-700/95 dark:bg-blue-800 dark:hover:bg-blue-800/90 text-slate-50',
-  inactive: 'hover:bg-slate-300 dark:hover:bg-slate-800',
-};
-
-function FormatDate(date, format) {
-  return new Date(date).toLocaleDateString('en-us', {
-    dateStyle: format || 'long',
-  });
-}
-
 export default function Page() {
   return <AgendaViewer agencies={agencies} agendas={agendas} />;
 }
@@ -36,6 +24,7 @@ function AgendaViewer({ agencies, agendas }) {
         activeMenu={activeMenu}
         setActiveMenu={setActiveMenu}
       />
+
       <section className='grid gap-3 m-3 xl:grid-cols-2'>
         <menu className='hidden xl:grid xl:grid-cols-2 gap-3'>
           <AgencyList
@@ -73,18 +62,22 @@ function MobileNav({
     <nav className='xl:hidden flex gap-3 m-3 items-center'>
       <button
         className={`z-10 p-5 rounded-lg cursor-pointer font-medium ${
-          open ? styles.inactive : styles.active
+          open
+            ? 'hover:bg-slate-300 dark:hover:bg-slate-800'
+            : 'bg-blue-700 hover:bg-blue-700/95 dark:bg-blue-800 dark:hover:bg-blue-800/90 text-slate-50'
         }`}
         onClick={() => setOpen(!open)}
       >
         Menu
       </button>
+
       <h1 className='px-5 font-medium'>{selectedAgency.name}</h1>
+
       <menu
         name='agency'
         className={`${
           open && activeMenu === 'agency' ? 'flex' : 'hidden'
-        } absolute top-16 p-3 mt-3 rounded-lg border-solid border-2 border-slate-400 font-medium bg-slate-200 dark:bg-slate-900 `}
+        } absolute top-16 p-3 mt-3 rounded-lg border-solid border-2 border-slate-400 dark:border-slate-700 font-medium bg-slate-200 dark:bg-slate-900 `}
       >
         <AgencyList
           agencies={agencies}
@@ -93,20 +86,22 @@ function MobileNav({
           setActiveMenu={setActiveMenu}
         />
       </menu>
+
       <menu
         name='agenda'
         className={`${
           open && activeMenu === 'agenda' ? 'flex flex-col' : 'hidden'
-        } absolute top-16 p-3 mt-3 rounded-lg border-solid border-2 border-slate-400 font-medium bg-slate-200 dark:bg-slate-900 `}
+        } absolute top-16 p-3 mt-3 rounded-lg border-solid border-2 border-slate-400 dark:border-slate-700 font-medium bg-slate-200 dark:bg-slate-900 `}
       >
         <button
-          className={`block my-3 first:mt-0 p-5 rounded-lg cursor-pointer font-medium ${styles.inactive}`}
+          className='block my-3 first:mt-0 p-5 rounded-lg cursor-pointer font-medium hover:bg-slate-300 dark:hover:bg-slate-800'
           onClick={() => {
             setActiveMenu('agency');
           }}
         >
           {selectedAgency.name}
         </button>
+
         <AgendaList
           agency={selectedAgency}
           agendas={agendas}
@@ -128,7 +123,9 @@ function AgencyList({
     <li
       key={agency.id}
       className={`block mt-3 first:mt-0 p-5 rounded-lg cursor-pointer font-medium  ${
-        selectedAgency === agency ? styles.active : styles.inactive
+        selectedAgency === agency
+          ? 'bg-blue-700 hover:bg-blue-700/95 dark:bg-blue-800 dark:hover:bg-blue-800/90 text-slate-50'
+          : 'hover:bg-slate-300 dark:hover:bg-slate-800'
       }`}
       onClick={() => {
         setSelectedAgency(agency);
@@ -150,11 +147,15 @@ function AgendaList({ agency, agendas, selectedAgenda, setSelectedAgenda }) {
     <li
       key={agenda.id}
       className={`block mt-3 first:mt-0 p-5 rounded-lg cursor-pointer font-medium ${
-        selectedAgenda === agenda ? styles.active : styles.inactive
+        selectedAgenda === agenda
+          ? 'bg-blue-700 hover:bg-blue-700/95 dark:bg-blue-800 dark:hover:bg-blue-800/90 text-slate-50'
+          : 'hover:bg-slate-300 dark:hover:bg-slate-800'
       } `}
       onClick={() => setSelectedAgenda(agenda)}
     >
-      {FormatDate(agenda.date, 'short')} - {agenda.title}
+      {new Date(agenda.date).toLocaleDateString('en-us', {
+        dateStyle: 'long',
+      })}
     </li>
   ));
   return <ul>{items}</ul>;
@@ -165,8 +166,11 @@ function AgendaDisplay({ agenda }) {
     return (
       <div className='p-5 bg-slate-50 dark:bg-slate-800 rounded-lg'>
         <h2 className='text-3xl font-semibold mt-5 mb-10'>
-          {FormatDate(agenda.date)} - {agenda.title}
+          {new Date(agenda.date).toLocaleDateString('en-us', {
+            dateStyle: 'long',
+          })}
         </h2>
+
         <p className='whitespace-pre-line text-justify max-w-prose'>
           {agenda.content}
         </p>
