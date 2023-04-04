@@ -1,5 +1,6 @@
 'use client';
 
+import ListItem from '@/components/ListItem';
 import { agendas, agencies } from '@/utils/data';
 import { useState } from 'react';
 
@@ -11,57 +12,12 @@ function AgendaViewer({ agencies, agendas }) {
   const [selectedAgency, setSelectedAgency] = useState(agencies[0]);
   const [selectedAgenda, setSelectedAgenda] = useState(agendas[0]);
   const [activeMenu, setActiveMenu] = useState('agency');
-
-  return (
-    <>
-      <MobileNav
-        agencies={agencies}
-        agendas={agendas}
-        selectedAgency={selectedAgency}
-        setSelectedAgency={setSelectedAgency}
-        selectedAgenda={selectedAgenda}
-        setSelectedAgenda={setSelectedAgenda}
-        activeMenu={activeMenu}
-        setActiveMenu={setActiveMenu}
-      />
-
-      <section className='grid gap-3 m-3 xl:grid-cols-2'>
-        <menu className='hidden xl:grid xl:grid-cols-2 gap-3'>
-          <AgencyList
-            agencies={agencies}
-            selectedAgency={selectedAgency}
-            setSelectedAgency={setSelectedAgency}
-            setActiveMenu={setActiveMenu}
-          />
-          <AgendaList
-            agency={selectedAgency}
-            agendas={agendas}
-            selectedAgenda={selectedAgenda}
-            setSelectedAgenda={setSelectedAgenda}
-          />
-        </menu>
-        <AgendaDisplay agency={selectedAgency} agenda={selectedAgenda} />
-      </section>
-    </>
-  );
-}
-
-function MobileNav({
-  agencies,
-  agendas,
-  selectedAgency,
-  setSelectedAgency,
-  selectedAgenda,
-  setSelectedAgenda,
-  activeMenu,
-  setActiveMenu,
-}) {
   const [open, setOpen] = useState(false);
 
   return (
-    <nav className='xl:hidden flex gap-3 m-3 items-center'>
+    <section className='grid gap-3 m-3 xl:grid-cols-4'>
       <button
-        className={`z-10 p-5 rounded-lg cursor-pointer font-medium ${
+        className={`xl:hidden z-10 p-5 rounded-lg cursor-pointer font-medium ${
           open
             ? 'hover:bg-slate-300 dark:hover:bg-slate-800'
             : 'bg-blue-700 hover:bg-blue-700/95 dark:bg-blue-800 dark:hover:bg-blue-800/90 text-slate-50'
@@ -70,14 +26,14 @@ function MobileNav({
       >
         Menu
       </button>
-
-      <h1 className='px-5 font-medium'>{selectedAgency.name}</h1>
-
       <menu
-        name='agency'
+        name='agency-menu'
         className={`${
-          open && activeMenu === 'agency' ? 'flex' : 'hidden'
-        } absolute top-16 p-3 mt-3 rounded-lg border-solid border-2 border-slate-400 dark:border-slate-700 font-medium bg-slate-200 dark:bg-slate-900 `}
+          // bug here with menu sticking if window is resized while open
+          open && activeMenu === 'agency'
+            ? 'flex absolute top-16 p-3 mt-3 rounded-lg border-solid border-2 border-slate-400 dark:border-slate-700 font-medium bg-slate-200 dark:bg-slate-900'
+            : 'hidden xl:grid gap-3'
+        }`}
       >
         <AgencyList
           agencies={agencies}
@@ -86,22 +42,22 @@ function MobileNav({
           setActiveMenu={setActiveMenu}
         />
       </menu>
-
       <menu
-        name='agenda'
+        name='agenda-menu'
         className={`${
-          open && activeMenu === 'agenda' ? 'flex flex-col' : 'hidden'
-        } absolute top-16 p-3 mt-3 rounded-lg border-solid border-2 border-slate-400 dark:border-slate-700 font-medium bg-slate-200 dark:bg-slate-900 `}
+          open && activeMenu === 'agenda'
+            ? 'flex flex-col absolute top-16 p-3 mt-3 rounded-lg border-solid border-2 border-slate-400 dark:border-slate-700 font-medium bg-slate-200 dark:bg-slate-900'
+            : 'hidden xl:grid gap-3'
+        }`}
       >
         <button
-          className='block my-3 first:mt-0 p-5 rounded-lg cursor-pointer font-medium hover:bg-slate-300 dark:hover:bg-slate-800'
+          className='xl:hidden block my-3 first:mt-0 p-5 rounded-lg cursor-pointer font-medium hover:bg-slate-300 dark:hover:bg-slate-800'
           onClick={() => {
             setActiveMenu('agency');
           }}
         >
           {selectedAgency.name}
         </button>
-
         <AgendaList
           agency={selectedAgency}
           agendas={agendas}
@@ -109,7 +65,10 @@ function MobileNav({
           setSelectedAgenda={setSelectedAgenda}
         />
       </menu>
-    </nav>
+      <article className='xl:col-span-2'>
+        <AgendaDisplay agency={selectedAgency} agenda={selectedAgenda} />
+      </article>
+    </section>
   );
 }
 
@@ -120,20 +79,16 @@ function AgencyList({
   setActiveMenu,
 }) {
   const items = agencies.map((agency) => (
-    <li
+    <ListItem
       key={agency.id}
-      className={`block mt-3 first:mt-0 p-5 rounded-lg cursor-pointer font-medium  ${
-        selectedAgency === agency
-          ? 'bg-blue-700 hover:bg-blue-700/95 dark:bg-blue-800 dark:hover:bg-blue-800/90 text-slate-50'
-          : 'hover:bg-slate-300 dark:hover:bg-slate-800'
-      }`}
+      active={selectedAgency === agency}
       onClick={() => {
         setSelectedAgency(agency);
         setActiveMenu('agenda');
       }}
     >
       {agency.name}
-    </li>
+    </ListItem>
   ));
   return <ul>{items}</ul>;
 }
@@ -144,19 +99,15 @@ function AgendaList({ agency, agendas, selectedAgenda, setSelectedAgenda }) {
   );
 
   const items = filteredAgendas.map((agenda) => (
-    <li
+    <ListItem
       key={agenda.id}
-      className={`block mt-3 first:mt-0 p-5 rounded-lg cursor-pointer font-medium ${
-        selectedAgenda === agenda
-          ? 'bg-blue-700 hover:bg-blue-700/95 dark:bg-blue-800 dark:hover:bg-blue-800/90 text-slate-50'
-          : 'hover:bg-slate-300 dark:hover:bg-slate-800'
-      } `}
+      active={selectedAgenda === agenda}
       onClick={() => setSelectedAgenda(agenda)}
     >
       {new Date(agenda.date).toLocaleDateString('en-us', {
         dateStyle: 'long',
       })}
-    </li>
+    </ListItem>
   ));
   return <ul>{items}</ul>;
 }
