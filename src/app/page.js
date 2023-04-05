@@ -1,10 +1,10 @@
 'use client';
 
-import Button from '@/components/Button';
+import { Button } from '@/components/Button';
 import ListItem from '@/components/ListItem';
 import Menu from '@/components/Menu';
 import { agendas, agencies } from '@/utils/data';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 export default function Page() {
   return <AgendaViewer agencies={agencies} agendas={agendas} />;
@@ -15,6 +15,26 @@ function AgendaViewer({ agencies, agendas }) {
   const [selectedAgenda, setSelectedAgenda] = useState(agendas[0]);
   const [activeMenu, setActiveMenu] = useState('agency');
   const [open, setOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const menuRef = useRef(null);
+
+  function menuVisible(entries) {
+    const [entry] = entries;
+    setIsVisible(entry.isIntersecting);
+    if (!isVisible && open) {
+      setOpen(false);
+    }
+  }
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(menuVisible);
+    let ref = menuRef.current;
+    ref && observer.observe(ref);
+
+    return () => {
+      observer.unobserve(ref);
+    };
+  });
 
   return (
     <section className='grid gap-3 m-3 xl:grid-cols-4'>
@@ -22,6 +42,7 @@ function AgendaViewer({ agencies, agendas }) {
         addStyles='xl:hidden z-10'
         active={!open}
         onClick={() => setOpen(!open)}
+        ref={menuRef}
       >
         Menu
       </Button>

@@ -1,4 +1,9 @@
-export default function Button({ addStyles, active, onClick, children }) {
+import { forwardRef } from 'react';
+
+export const Button = forwardRef(function Button(
+  { addStyles, active, onClick, children },
+  ref
+) {
   return (
     <button
       className={`${addStyles} p-5 rounded-lg cursor-pointer font-medium ${
@@ -7,8 +12,9 @@ export default function Button({ addStyles, active, onClick, children }) {
           : 'hover:bg-slate-300 dark:hover:bg-slate-800'
       }`}
       onClick={onClick}
+      ref={ref}
     >
       {children}
     </button>
   );
-}
+});
