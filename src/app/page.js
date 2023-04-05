@@ -1,6 +1,8 @@
 'use client';
 
+import Button from '@/components/Button';
 import ListItem from '@/components/ListItem';
+import Menu from '@/components/Menu';
 import { agendas, agencies } from '@/utils/data';
 import { useState } from 'react';
 
@@ -16,58 +18,40 @@ function AgendaViewer({ agencies, agendas }) {
 
   return (
     <section className='grid gap-3 m-3 xl:grid-cols-4'>
-      <button
-        className={`xl:hidden z-10 p-5 rounded-lg cursor-pointer font-medium ${
-          open
-            ? 'hover:bg-slate-300 dark:hover:bg-slate-800'
-            : 'bg-blue-700 hover:bg-blue-700/95 dark:bg-blue-800 dark:hover:bg-blue-800/90 text-slate-50'
-        }`}
+      <Button
+        styles='xl:hidden z-10'
+        active={!open}
         onClick={() => setOpen(!open)}
       >
         Menu
-      </button>
-      <menu
-        name='agency-menu'
-        className={`${
-          // bug here with menu sticking if window is resized while open
-          open && activeMenu === 'agency'
-            ? 'flex absolute top-16 p-3 mt-3 rounded-lg border-solid border-2 border-slate-400 dark:border-slate-700 font-medium bg-slate-200 dark:bg-slate-900'
-            : 'hidden xl:grid gap-3'
-        }`}
-      >
+      </Button>
+      <Menu open={open} active={activeMenu === 'agency'}>
         <AgencyList
           agencies={agencies}
           selectedAgency={selectedAgency}
           setSelectedAgency={setSelectedAgency}
           setActiveMenu={setActiveMenu}
         />
-      </menu>
-      <menu
-        name='agenda-menu'
-        className={`${
-          open && activeMenu === 'agenda'
-            ? 'flex flex-col absolute top-16 p-3 mt-3 rounded-lg border-solid border-2 border-slate-400 dark:border-slate-700 font-medium bg-slate-200 dark:bg-slate-900'
-            : 'hidden xl:grid gap-3'
-        }`}
-      >
-        <button
-          className='xl:hidden block my-3 first:mt-0 p-5 rounded-lg cursor-pointer font-medium hover:bg-slate-300 dark:hover:bg-slate-800'
+      </Menu>
+      <Menu open={open} active={activeMenu === 'agenda'}>
+        <Button
+          styles='xl:hidden block my-3 first:mt-0'
           onClick={() => {
             setActiveMenu('agency');
           }}
         >
           {selectedAgency.name}
-        </button>
+        </Button>
         <AgendaList
           agency={selectedAgency}
           agendas={agendas}
           selectedAgenda={selectedAgenda}
           setSelectedAgenda={setSelectedAgenda}
         />
-      </menu>
-      <article className='xl:col-span-2'>
+      </Menu>
+      <main className='xl:col-span-2'>
         <AgendaDisplay agency={selectedAgency} agenda={selectedAgenda} />
-      </article>
+      </main>
     </section>
   );
 }
