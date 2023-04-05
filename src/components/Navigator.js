@@ -4,6 +4,8 @@ import Menu from './Menu';
 import AgencyList from './AgencyList';
 import Button from './Button';
 import AgendaList from './AgendaList';
+import { Menu as Hamburger } from 'react-feather';
+import { ChevronLeft } from 'react-feather';
 
 export default function Navigator({
   agencies,
@@ -25,12 +27,12 @@ export default function Navigator({
   return (
     <nav className='grid gap-3 xl:grid-cols-2'>
       <Button
-        addStyles='xl:hidden z-10'
+        addStyles='xl:hidden z-10 w-20'
         active={!open}
         onClick={() => setOpen(!open)}
         ref={buttonRef}
       >
-        Menu
+        <Hamburger />
       </Button>
       <Menu open={open} active={activeMenu === 'agency'}>
         <AgencyList
@@ -42,12 +44,13 @@ export default function Navigator({
       </Menu>
       <Menu open={open} active={activeMenu === 'agenda'}>
         <Button
-          addStyles='xl:hidden block my-3 first:mt-0'
+          addStyles='xl:hidden my-3 mt-0'
           active={false}
           onClick={() => {
             setActiveMenu('agency');
           }}
         >
+          <ChevronLeft className='mr-5' />
           {selectedAgency.name}
         </Button>
         <AgendaList

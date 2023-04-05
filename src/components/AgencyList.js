@@ -10,6 +10,7 @@ export default function AgencyList({
     <ListItem
       key={agency.id}
       active={selectedAgency === agency}
+      arrowRight={true}
       onClick={() => {
         setSelectedAgency(agency);
         setActiveMenu('agenda');
