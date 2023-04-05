@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 
-export const Button = forwardRef(function Button(
+const Button = forwardRef(function Button(
   { addStyles, active, onClick, children },
   ref
 ) {
@@ -18,3 +18,5 @@ export const Button = forwardRef(function Button(
     </button>
   );
 });
+
+export default Button;
