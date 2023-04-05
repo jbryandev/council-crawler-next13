@@ -27,7 +27,9 @@ export default function Navigator({
   return (
     <nav className='grid gap-3 xl:grid-cols-2'>
       <Button
-        addStyles='xl:hidden z-10 w-20'
+        addStyles={`xl:hidden z-10 w-20 ${
+          open && 'bg-slate-300 hover:bg-slate-400/40'
+        }`}
         active={!open}
         onClick={() => setOpen(!open)}
         ref={buttonRef}
