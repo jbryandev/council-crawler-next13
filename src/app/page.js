@@ -19,7 +19,7 @@ function AgendaViewer({ agencies, agendas }) {
   return (
     <section className='grid gap-3 m-3 xl:grid-cols-4'>
       <Button
-        styles='xl:hidden z-10'
+        addStyles='xl:hidden z-10'
         active={!open}
         onClick={() => setOpen(!open)}
       >
@@ -35,7 +35,8 @@ function AgendaViewer({ agencies, agendas }) {
       </Menu>
       <Menu open={open} active={activeMenu === 'agenda'}>
         <Button
-          styles='xl:hidden block my-3 first:mt-0'
+          addStyles='xl:hidden block my-3 first:mt-0'
+          active={false}
           onClick={() => {
             setActiveMenu('agency');
           }}
