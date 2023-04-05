@@ -9,6 +9,7 @@ export default function AgendaList({
   const filteredAgendas = agendas.filter(
     (agenda) => agenda.agency === agency?.id
   );
+  filteredAgendas.sort((a, b) => new Date(b.date) - new Date(a.date));
 
   const items = filteredAgendas.map((agenda) => (
     <ListItem
