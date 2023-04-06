@@ -16,7 +16,7 @@ export default function useIntersectionObserver(ref) {
     return () => {
       observer.unobserve(current);
     };
-  });
+  }, [ref]);
 
   return isVisible;
 }
