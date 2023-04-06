@@ -5,6 +5,7 @@ export default function AgendaList({
   agendas,
   selectedAgenda,
   setSelectedAgenda,
+  setOpen,
 }) {
   const filteredAgendas = agendas.filter(
     (agenda) => agenda.agency === agency?.id
@@ -15,7 +16,10 @@ export default function AgendaList({
     <ListItem
       key={agenda.id}
       active={selectedAgenda === agenda}
-      onClick={() => setSelectedAgenda(agenda)}
+      onClick={() => {
+        setSelectedAgenda(agenda);
+        setOpen(false);
+      }}
     >
       {new Date(agenda.date).toLocaleDateString('en-us', {
         dateStyle: 'long',

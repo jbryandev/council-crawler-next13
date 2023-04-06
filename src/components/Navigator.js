@@ -61,6 +61,7 @@ export default function Navigator({
           agendas={agendas}
           selectedAgenda={selectedAgenda}
           setSelectedAgenda={setSelectedAgenda}
+          setOpen={setOpen}
         />
       </Menu>
     </nav>
