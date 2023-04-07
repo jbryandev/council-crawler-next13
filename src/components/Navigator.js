@@ -1,12 +1,10 @@
-import useIntersectionObserver from '@/utils/useIntersectionObserver';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Menu from './Menu';
 import AgencyList from './AgencyList';
 import Button from './Button';
 import AgendaList from './AgendaList';
 import { Menu as Hamburger } from 'react-feather';
 import { ChevronLeft } from 'react-feather';
-import useOutsideDetector from '@/utils/useOutsideDetector';
 
 export default function Navigator({
   agencies,
@@ -18,12 +16,32 @@ export default function Navigator({
 }) {
   const [activeMenu, setActiveMenu] = useState('agency');
   const [menuOpen, setMenuOpen] = useState(false);
-  const menuRef = useRef(null);
-  useOutsideDetector(menuRef, () => setMenuOpen(false));
+  const buttonRef = useRef(null);
+  const agencyMenuRef = useRef(null);
+  const agendaMenuRef = useRef(null);
+
+  useEffect(() => {
+    function handleOutsideClick(event) {
+      if (
+        buttonRef.current &&
+        !buttonRef.current.contains(event.target) &&
+        ((agencyMenuRef.current &&
+          !agencyMenuRef.current.contains(event.target)) ||
+          (agendaMenuRef.current &&
+            !agendaMenuRef.current.contains(event.target)))
+      ) {
+        setMenuOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleOutsideClick);
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    };
+  }, [buttonRef, agencyMenuRef, agendaMenuRef]);
 
   return (
     <>
-      <nav className='grid gap-3 xl:hidden' ref={menuRef}>
+      <nav className='grid gap-3 xl:hidden'>
         <Button
           addStyles={`xl:hidden z-10 w-20 ${
             menuOpen &&
@@ -31,11 +49,12 @@ export default function Navigator({
           }`}
           active={!menuOpen}
           onClick={() => setMenuOpen(!menuOpen)}
+          ref={buttonRef}
         >
           <Hamburger />
         </Button>
         {menuOpen && activeMenu === 'agency' && (
-          <Menu>
+          <Menu ref={agencyMenuRef}>
             <AgencyList
               agencies={agencies}
               selectedAgency={selectedAgency}
@@ -45,7 +64,7 @@ export default function Navigator({
           </Menu>
         )}
         {menuOpen && activeMenu === 'agenda' && (
-          <Menu>
+          <Menu ref={agendaMenuRef}>
             <Button
               addStyles='xl:hidden mb-3 justify-between text-left'
               active={false}
