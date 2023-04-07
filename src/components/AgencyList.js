@@ -1,4 +1,4 @@
-import ListItem from './ListItem';
+import Button from './Button';
 import { ChevronRight } from 'react-feather';
 
 export default function AgencyList({
@@ -8,17 +8,19 @@ export default function AgencyList({
   setActiveMenu,
 }) {
   const items = agencies.map((agency) => (
-    <ListItem
-      key={agency.id}
-      active={selectedAgency === agency}
-      arrowRight={<ChevronRight className='ml-5' />}
-      onClick={() => {
-        setSelectedAgency(agency);
-        setActiveMenu('agenda');
-      }}
-    >
-      {agency.name}
-    </ListItem>
+    <li key={agency.id} className='flex flex-col mt-3 first:mt-0'>
+      <Button
+        active={selectedAgency === agency}
+        arrowRight={<ChevronRight className='ml-5' />}
+        onClick={() => {
+          setSelectedAgency(agency);
+          setActiveMenu('agenda');
+        }}
+        iconRight={<ChevronRight className='ml-5' />}
+      >
+        {agency.name}
+      </Button>
+    </li>
   ));
   return <ul>{items}</ul>;
 }
