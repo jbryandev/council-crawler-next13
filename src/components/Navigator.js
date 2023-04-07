@@ -5,6 +5,7 @@ import Button from './Button';
 import AgendaList from './AgendaList';
 import { Menu as Hamburger } from 'react-feather';
 import { ChevronLeft } from 'react-feather';
+import useOutsideDetector from '@/utils/useOutsideDetector';
 
 export default function Navigator({
   agencies,
@@ -20,24 +21,18 @@ export default function Navigator({
   const agencyMenuRef = useRef(null);
   const agendaMenuRef = useRef(null);
 
-  useEffect(() => {
-    function handleOutsideClick(event) {
-      if (
-        buttonRef.current &&
-        !buttonRef.current.contains(event.target) &&
-        ((agencyMenuRef.current &&
-          !agencyMenuRef.current.contains(event.target)) ||
-          (agendaMenuRef.current &&
-            !agendaMenuRef.current.contains(event.target)))
-      ) {
-        setMenuOpen(false);
-      }
+  useOutsideDetector((event) => {
+    if (
+      buttonRef.current &&
+      !buttonRef.current.contains(event.target) &&
+      ((agencyMenuRef.current &&
+        !agencyMenuRef.current.contains(event.target)) ||
+        (agendaMenuRef.current &&
+          !agendaMenuRef.current.contains(event.target)))
+    ) {
+      setMenuOpen(false);
     }
-    document.addEventListener('mousedown', handleOutsideClick);
-    return () => {
-      document.removeEventListener('mousedown', handleOutsideClick);
-    };
-  }, [buttonRef, agencyMenuRef, agendaMenuRef]);
+  });
 
   return (
     <>

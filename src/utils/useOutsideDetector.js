@@ -1,16 +1,13 @@
 import { useEffect } from 'react';
 
-export default function useOutsideDetector(ref, onClickOutside) {
+export default function useOutsideDetector(onClickOutside) {
   useEffect(() => {
-    function handleClickOutside(event) {
-      if (ref.current && !ref.current.contains(event.target)) {
-        onClickOutside && onClickOutside();
-      }
+    function handleOutsideClick(event) {
+      onClickOutside && onClickOutside(event);
     }
-
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('mousedown', handleOutsideClick);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('mousedown', handleOutsideClick);
     };
-  }, [ref, onClickOutside]);
+  }, [onClickOutside]);
 }
