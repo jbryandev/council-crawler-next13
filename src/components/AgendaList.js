@@ -15,7 +15,7 @@ export default function AgendaList({
   const items = filteredAgendas.map((agenda) => (
     <li key={agenda.id} className='flex flex-col mt-3 first:mt-0'>
       <Button
-        styleOverrides='!justify-start'
+        styleOverrides='!justify-start text-left'
         active={selectedAgenda === agenda}
         onClick={() => {
           setSelectedAgenda(agenda);

@@ -10,6 +10,7 @@ export default function AgencyList({
   const items = agencies.map((agency) => (
     <li key={agency.id} className='flex flex-col mt-3 first:mt-0'>
       <Button
+        styleOverrides='text-left'
         active={selectedAgency === agency}
         arrowRight={<ChevronRight className='ml-5' />}
         onClick={() => {
