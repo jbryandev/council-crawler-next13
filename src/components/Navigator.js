@@ -1,10 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import Menu from './Menu';
 import AgencyList from './AgencyList';
 import Button from './Button';
 import AgendaList from './AgendaList';
-import { Menu as Hamburger } from 'react-feather';
-import { ChevronLeft } from 'react-feather';
+import { Menu as Hamburger, ChevronLeft } from 'react-feather';
 import useOutsideDetector from '@/utils/useOutsideDetector';
 
 export default function Navigator({
@@ -38,10 +37,7 @@ export default function Navigator({
     <>
       <nav className='grid gap-3 xl:hidden'>
         <Button
-          addStyles={`xl:hidden z-10 w-20 ${
-            menuOpen &&
-            'bg-slate-300 hover:bg-slate-400/40 dark:bg-slate-800 dark:hover:bg-slate-700/60'
-          }`}
+          styleOverrides='xl:hidden w-20'
           active={!menuOpen}
           onClick={() => setMenuOpen(!menuOpen)}
           ref={buttonRef}
@@ -61,13 +57,12 @@ export default function Navigator({
         {menuOpen && activeMenu === 'agenda' && (
           <Menu ref={agendaMenuRef}>
             <Button
-              addStyles='xl:hidden mb-3 justify-between text-left'
-              active={false}
+              styleOverrides='xl:hidden mb-3 justify-between text-left bg-slate-50 hover:bg-slate-200/100 dark:bg-slate-900 dark:hover:bg-slate-800'
               onClick={() => {
                 setActiveMenu('agency');
               }}
+              iconLeft={<ChevronLeft className='mr-5' />}
             >
-              <ChevronLeft className='mr-5' />
               {selectedAgency.name}
             </Button>
             <AgendaList

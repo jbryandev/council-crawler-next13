@@ -4,8 +4,8 @@ export default function ListItem({
   key,
   active,
   onClick,
-  arrowLeft = false,
-  arrowRight = false,
+  arrowLeft,
+  arrowRight,
   children,
 }) {
   return (
@@ -18,9 +18,9 @@ export default function ListItem({
       } `}
       onClick={onClick}
     >
-      {arrowLeft && <ChevronLeft className='mr-5' />}
+      {arrowLeft}
       {children}
-      {arrowRight && <ChevronRight className='ml-5' />}
+      {arrowRight}
     </li>
   );
 }

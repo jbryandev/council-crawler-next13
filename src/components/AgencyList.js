@@ -1,4 +1,5 @@
 import ListItem from './ListItem';
+import { ChevronRight } from 'react-feather';
 
 export default function AgencyList({
   agencies,
@@ -10,7 +11,7 @@ export default function AgencyList({
     <ListItem
       key={agency.id}
       active={selectedAgency === agency}
-      arrowRight={true}
+      arrowRight={<ChevronRight className='ml-5' />}
       onClick={() => {
         setSelectedAgency(agency);
         setActiveMenu('agenda');
