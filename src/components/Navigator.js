@@ -5,6 +5,7 @@ import Button from './Button';
 import AgendaList from './AgendaList';
 import { Menu as Hamburger, ChevronLeft } from 'react-feather';
 import useOutsideDetector from '@/utils/useOutsideDetector';
+import { motion } from 'framer-motion';
 
 export default function Navigator({
   agencies,
@@ -49,32 +50,44 @@ export default function Navigator({
         </Button>
         {menuOpen && activeMenu === 'agency' && (
           <Menu ref={agencyMenuRef}>
-            <AgencyList
-              agencies={agencies}
-              selectedAgency={selectedAgency}
-              setSelectedAgency={setSelectedAgency}
-              setActiveMenu={setActiveMenu}
-            />
+            <motion.div
+              initial={{ x: '-100%' }}
+              animate={{ x: '0%' }}
+              transition={{ duration: 0.2 }}
+            >
+              <AgencyList
+                agencies={agencies}
+                selectedAgency={selectedAgency}
+                setSelectedAgency={setSelectedAgency}
+                setActiveMenu={setActiveMenu}
+              />
+            </motion.div>
           </Menu>
         )}
         {menuOpen && activeMenu === 'agenda' && (
           <Menu ref={agendaMenuRef}>
-            <Button
-              styles='lg:hidden mb-3'
-              onClick={() => {
-                setActiveMenu('agency');
-              }}
-              iconLeft={<ChevronLeft className='mr-5' />}
+            <motion.div
+              initial={{ x: '100%' }}
+              animate={{ x: '0%' }}
+              transition={{ duration: 0.2 }}
             >
-              {selectedAgency.name}
-            </Button>
-            <AgendaList
-              agency={selectedAgency}
-              agendas={agendas}
-              selectedAgenda={selectedAgenda}
-              setSelectedAgenda={setSelectedAgenda}
-              setOpen={setMenuOpen}
-            />
+              <Button
+                styles='lg:hidden mb-3'
+                onClick={() => {
+                  setActiveMenu('agency');
+                }}
+                iconLeft={<ChevronLeft className='mr-5' />}
+              >
+                {selectedAgency.name}
+              </Button>
+              <AgendaList
+                agency={selectedAgency}
+                agendas={agendas}
+                selectedAgenda={selectedAgenda}
+                setSelectedAgenda={setSelectedAgenda}
+                setOpen={setMenuOpen}
+              />
+            </motion.div>
           </Menu>
         )}
       </nav>
