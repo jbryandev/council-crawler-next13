@@ -10,7 +10,7 @@ export default function Page() {
   const [selectedAgenda, setSelectedAgenda] = useState(agendas[0]);
 
   return (
-    <section className='grid gap-3 m-3 xl:grid-cols-2'>
+    <section className='grid gap-3 m-3 lg:grid-cols-2'>
       <Navigator
         agencies={agencies}
         agendas={agendas}

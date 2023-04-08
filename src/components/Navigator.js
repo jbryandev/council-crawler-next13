@@ -35,9 +35,9 @@ export default function Navigator({
 
   return (
     <>
-      <nav id='mobile' className='grid gap-3 xl:hidden'>
+      <nav id='mobile' className='grid gap-3 lg:hidden'>
         <Button
-          styles={`xl:hidden w-20 ${
+          styles={`lg:hidden w-20 ${
             menuOpen &&
             '!bg-slate-300 hover:!bg-slate-400/40 dark:!bg-slate-800 dark:hover:!bg-slate-700/60'
           }`}
@@ -60,7 +60,7 @@ export default function Navigator({
         {menuOpen && activeMenu === 'agenda' && (
           <Menu ref={agendaMenuRef}>
             <Button
-              styles='xl:hidden mb-3'
+              styles='lg:hidden mb-3'
               onClick={() => {
                 setActiveMenu('agency');
               }}
@@ -78,7 +78,7 @@ export default function Navigator({
           </Menu>
         )}
       </nav>
-      <nav id='desktop' className='hidden xl:grid grid-cols-2 gap-3'>
+      <nav id='desktop' className='hidden lg:grid grid-cols-2 gap-3'>
         <AgencyList
           agencies={agencies}
           selectedAgency={selectedAgency}
