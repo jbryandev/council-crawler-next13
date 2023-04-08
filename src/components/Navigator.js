@@ -37,7 +37,7 @@ export default function Navigator({
     <>
       <nav id='mobile' className='grid gap-3 xl:hidden'>
         <Button
-          styleOverrides={`xl:hidden w-20 ${
+          styles={`xl:hidden w-20 ${
             menuOpen &&
             '!bg-slate-300 hover:!bg-slate-400/40 dark:!bg-slate-800 dark:hover:!bg-slate-700/60'
           }`}
@@ -60,7 +60,7 @@ export default function Navigator({
         {menuOpen && activeMenu === 'agenda' && (
           <Menu ref={agendaMenuRef}>
             <Button
-              styleOverrides='xl:hidden mb-3 text-left'
+              styles='xl:hidden mb-3'
               onClick={() => {
                 setActiveMenu('agency');
               }}
