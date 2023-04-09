@@ -1,25 +1,10 @@
-'use client';
-
 import AgendaViewer from '@/components/AgendaViewer';
-import Navigator from '@/components/Navigator';
-import { agendas, agencies } from '@/utils/data';
-import { useState } from 'react';
+// import { agendas } from '@/utils/data';
+import prisma from '@/utils/prisma';
 
-export default function Page() {
-  const [selectedAgency, setSelectedAgency] = useState(agencies[0]);
-  const [selectedAgenda, setSelectedAgenda] = useState(agendas[0]);
-
-  return (
-    <section className='grid gap-3 m-3 lg:grid-cols-2'>
-      <Navigator
-        agencies={agencies}
-        agendas={agendas}
-        selectedAgency={selectedAgency}
-        selectedAgenda={selectedAgenda}
-        setSelectedAgency={setSelectedAgency}
-        setSelectedAgenda={setSelectedAgenda}
-      />
-      <AgendaViewer agenda={selectedAgenda} />
-    </section>
-  );
+export default async function Page() {
+  const agencies = await prisma.agency.findMany();
+  const agendas = await prisma.agenda.findMany();
+  console.log(agendas);
+  return <AgendaViewer agencies={agencies} agendas={agendas} />;
 }

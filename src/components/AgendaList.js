@@ -8,7 +8,7 @@ export default function AgendaList({
   setOpen,
 }) {
   const filteredAgendas = agendas.filter(
-    (agenda) => agenda.agency === agency?.id
+    (agenda) => agenda.agencyID === agency?.id
   );
   filteredAgendas.sort((a, b) => new Date(b.date) - new Date(a.date));
 

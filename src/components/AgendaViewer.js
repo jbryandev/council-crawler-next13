@@ -1,21 +1,24 @@
-import { agencies } from '@/utils/data';
+'use client';
 
-export default function AgendaViewer({ agenda }) {
-  const agency = agencies.find((agency) => agency.id === agenda?.agency);
+import AgendaDisplay from '@/components/AgendaDisplay';
+import Navigator from '@/components/Navigator';
+import { useState } from 'react';
+
+export default function AgendaViewer({ agencies, agendas }) {
+  const [selectedAgency, setSelectedAgency] = useState(agencies[0]);
+  const [selectedAgenda, setSelectedAgenda] = useState(agendas[0]);
 
   return (
-    <main className='p-5 bg-slate-50 dark:bg-slate-800 rounded-lg drop-shadow-lg'>
-      <h1 className='text-3xl font-semibold mt-5 mb-2'>
-        {new Date(agenda.date).toLocaleDateString('en-us', {
-          dateStyle: 'long',
-        })}
-      </h1>
-
-      <h2 className='text-lg mb-10 opacity-75'>{agency.name}</h2>
-
-      <p className='whitespace-pre-line text-justify max-w-prose'>
-        {agenda.content}
-      </p>
-    </main>
+    <section className='grid gap-3 m-3 lg:grid-cols-2'>
+      <Navigator
+        agencies={agencies}
+        agendas={agendas}
+        selectedAgency={selectedAgency}
+        selectedAgenda={selectedAgenda}
+        setSelectedAgency={setSelectedAgency}
+        setSelectedAgenda={setSelectedAgenda}
+      />
+      <AgendaDisplay agenda={selectedAgenda} />
+    </section>
   );
 }
