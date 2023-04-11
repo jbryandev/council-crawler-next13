@@ -1,3 +1,4 @@
+import BackToTop from '@/components/BackToTop';
 import './globals.css';
 
 export const metadata = {
@@ -10,6 +11,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang='en' className='subpixel-antialiased dark'>
       <body className='bg-slate-200 dark:bg-slate-900 text-slate-800 dark:text-slate-300'>
+        <BackToTop />
         {children}
       </body>
     </html>
