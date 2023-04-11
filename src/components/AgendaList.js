@@ -1,4 +1,4 @@
-import Button from './Button';
+import MenuListItem from './MenuListItem';
 
 export default function AgendaList({
   agency,
@@ -8,13 +8,13 @@ export default function AgendaList({
   setOpen,
 }) {
   const filteredAgendas = agendas.filter(
-    (agenda) => agenda.agencyID === agency?.id
+    (agenda) => agenda.agencyId === agency?.id
   );
   filteredAgendas.sort((a, b) => new Date(b.date) - new Date(a.date));
 
   const items = filteredAgendas.map((agenda) => (
     <li key={agenda.id} className='flex flex-col mt-3 first:mt-0'>
-      <Button
+      <MenuListItem
         styles='!justify-start'
         active={selectedAgenda === agenda}
         onClick={() => {
@@ -25,7 +25,7 @@ export default function AgendaList({
         {new Date(agenda.date).toLocaleDateString('en-us', {
           dateStyle: 'long',
         })}
-      </Button>
+      </MenuListItem>
     </li>
   ));
   return <ul>{items}</ul>;
