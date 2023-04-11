@@ -1,4 +1,4 @@
-export default function AgendaViewer({ agenda, agencies }) {
+export default function AgendaDisplay({ agenda, agencies }) {
   const agency = agencies.find((agency) => agency.id === agenda.agencyId);
 
   return (
