@@ -28,5 +28,13 @@ export default function AgendaList({
       </MenuListItem>
     </li>
   ));
-  return <ul>{items}</ul>;
+  return (
+    <ul>
+      {items.length > 0 ? (
+        items
+      ) : (
+        <li className='p-5 font-normal'>No agendas to display</li>
+      )}
+    </ul>
+  );
 }
