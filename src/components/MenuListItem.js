@@ -40,7 +40,9 @@ const MenuListItem = forwardRef(function MenuListItem(
             {badgeValue}
           </div>
         )}
-        <div className='ml-5 min-w-[24px]'>{iconRight}</div>
+        {badgeValue != undefined && (
+          <div className='ml-5 min-w-[24px]'>{iconRight}</div>
+        )}
       </div>
     </button>
   );
