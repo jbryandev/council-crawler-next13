@@ -18,6 +18,6 @@ model Agenda {
   date     DateTime @db.Date
   title    String
   content  String
-  agencyID String   @db.ObjectId
-  agency   Agency   @relation(fields: [agencyID], references: [id])
+  agencyId String   @db.ObjectId
+  agency   Agency   @relation(fields: [agencyId], references: [id])
 }
