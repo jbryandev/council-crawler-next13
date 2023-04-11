@@ -6,7 +6,11 @@ import { useState } from 'react';
 
 export default function AgendaViewer({ agencies, agendas }) {
   const [selectedAgency, setSelectedAgency] = useState(agencies[0]);
-  const [selectedAgenda, setSelectedAgenda] = useState(agendas[0]);
+  const [selectedAgenda, setSelectedAgenda] = useState(
+    agendas
+      .filter((agenda) => agenda.agencyId === selectedAgency.id)
+      .sort((a, b) => new Date(b.date) - new Date(a.date))[0]
+  );
 
   return (
     <section className='grid gap-3 m-3 lg:grid-cols-2'>
