@@ -16,9 +16,9 @@ const Button = forwardRef(function Button(
       onClick={onClick}
       ref={ref}
     >
-      {iconLeft}
+      {iconLeft && <div className='mr-5'>{iconLeft}</div>}
       {children}
-      {iconRight}
+      {iconRight && <div className='ml-5'>{iconRight}</div>}
     </button>
   );
 });

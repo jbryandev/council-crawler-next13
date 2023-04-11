@@ -6,6 +6,8 @@ import AgendaList from './AgendaList';
 import { Menu as Hamburger, ChevronLeft } from 'react-feather';
 import useOutsideDetector from '@/utils/useOutsideDetector';
 import { motion } from 'framer-motion';
+import MenuListItem from './MenuListItem';
+import { X } from 'react-feather';
 
 export default function Navigator({
   agencies,
@@ -46,7 +48,7 @@ export default function Navigator({
           onClick={() => setMenuOpen(!menuOpen)}
           ref={buttonRef}
         >
-          <Hamburger />
+          {menuOpen ? <X /> : <Hamburger />}
         </Button>
         {menuOpen && activeMenu === 'agency' && (
           <Menu ref={agencyMenuRef}>
@@ -57,6 +59,7 @@ export default function Navigator({
             >
               <AgencyList
                 agencies={agencies}
+                agendas={agendas}
                 selectedAgency={selectedAgency}
                 setSelectedAgency={setSelectedAgency}
                 setActiveMenu={setActiveMenu}
@@ -71,15 +74,15 @@ export default function Navigator({
               animate={{ x: '0%' }}
               transition={{ duration: 0.2 }}
             >
-              <Button
+              <MenuListItem
                 styles='lg:hidden mb-3'
                 onClick={() => {
                   setActiveMenu('agency');
                 }}
-                iconLeft={<ChevronLeft className='mr-5' />}
+                iconLeft={<ChevronLeft />}
               >
                 {selectedAgency.name}
-              </Button>
+              </MenuListItem>
               <AgendaList
                 agency={selectedAgency}
                 agendas={agendas}
@@ -94,6 +97,7 @@ export default function Navigator({
       <nav id='desktop' className='hidden lg:grid grid-cols-2 gap-3'>
         <AgencyList
           agencies={agencies}
+          agendas={agendas}
           selectedAgency={selectedAgency}
           setSelectedAgency={setSelectedAgency}
           setActiveMenu={setActiveMenu}
