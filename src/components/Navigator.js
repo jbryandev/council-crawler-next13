@@ -8,6 +8,7 @@ import useOutsideDetector from '@/utils/useOutsideDetector';
 import { motion } from 'framer-motion';
 import MenuListItem from './MenuListItem';
 import { X } from 'react-feather';
+import HamburgerMenu from './HamburgerMenu';
 
 export default function Navigator({
   agencies,
@@ -22,6 +23,9 @@ export default function Navigator({
   const buttonRef = useRef(null);
   const agencyMenuRef = useRef(null);
   const agendaMenuRef = useRef(null);
+  const hamburgerLine = `h-[3px] w-7 my-[3px] transition ease transform duration-300 ${
+    !menuOpen ? 'bg-slate-50' : 'bg-slate-600 dark:bg-slate-300'
+  }`;
 
   useOutsideDetector((event) => {
     if (
@@ -39,17 +43,11 @@ export default function Navigator({
   return (
     <>
       <nav id='mobile' className='grid gap-3 lg:hidden'>
-        <Button
-          styles={`lg:hidden w-20 ${
-            menuOpen &&
-            '!bg-slate-300 hover:!bg-slate-400/40 dark:!bg-slate-800 dark:hover:!bg-slate-700/60'
-          }`}
-          active={!menuOpen}
+        <HamburgerMenu
+          active={menuOpen}
           onClick={() => setMenuOpen(!menuOpen)}
           ref={buttonRef}
-        >
-          {menuOpen ? <X /> : <Hamburger />}
-        </Button>
+        />
         {menuOpen && activeMenu === 'agency' && (
           <Menu ref={agencyMenuRef}>
             <motion.div
