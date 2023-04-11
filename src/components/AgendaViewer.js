@@ -18,7 +18,7 @@ export default function AgendaViewer({ agencies, agendas }) {
         setSelectedAgency={setSelectedAgency}
         setSelectedAgenda={setSelectedAgenda}
       />
-      <AgendaDisplay agenda={selectedAgenda} />
+      <AgendaDisplay agenda={selectedAgenda} agencies={agencies} />
     </section>
   );
 }

@@ -1,5 +1,5 @@
-export default function AgendaViewer({ agenda }) {
-  const agency = { name: 'Placeholder agency name' };
+export default function AgendaViewer({ agenda, agencies }) {
+  const agency = agencies.find((agency) => agency.id === agenda.agencyId);
 
   return (
     <main className='p-5 bg-slate-50 dark:bg-slate-800 rounded-lg drop-shadow-lg'>
