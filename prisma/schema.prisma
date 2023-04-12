@@ -9,7 +9,7 @@ datasource db {
 
 model Agency {
   id     String   @id @default(auto()) @map("_id") @db.ObjectId
-  name   String
+  name   String   @unique
   Agenda Agenda[]
 }
 
@@ -17,6 +17,7 @@ model Agenda {
   id       String   @id @default(auto()) @map("_id") @db.ObjectId
   date     DateTime @db.Date
   title    String
+  url      String   @unique
   content  String
   agencyId String   @db.ObjectId
   agency   Agency   @relation(fields: [agencyId], references: [id])
