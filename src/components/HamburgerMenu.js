@@ -11,7 +11,7 @@ const HamburgerMenu = forwardRef(function HamburgerMenu(
 
   return (
     <Button
-      styles={`lg:hidden w-20 flex-col ${
+      styles={`lg:hidden flex-col ${
         active &&
         '!bg-slate-300 hover:!bg-slate-400/40 dark:!bg-slate-800 dark:hover:!bg-slate-700/60'
       }`}

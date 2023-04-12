@@ -42,7 +42,7 @@ export default function Navigator({
 
   return (
     <>
-      <nav id='mobile' className='grid gap-3 lg:hidden'>
+      <nav id='mobile' className='block lg:hidden'>
         <HamburgerMenu
           active={menuOpen}
           onClick={() => setMenuOpen(!menuOpen)}
