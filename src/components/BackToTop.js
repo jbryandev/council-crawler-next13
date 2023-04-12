@@ -23,7 +23,7 @@ export default function BackToTop() {
 
   return (
     <button
-      className={`z-50 w-14 h-14 rounded-full flex justify-center items-center fixed bottom-5 right-5 shadow-lg bg-blue-700 hover:bg-blue-600 dark:bg-blue-800 dark:hover:bg-blue-700 text-slate-50 transition-opacity duration-1000 ease-in-out ${
+      className={`z-50 w-14 h-14 rounded-full flex justify-center items-center fixed bottom-5 right-5 shadow-lg bg-blue-700 hover:bg-blue-600 dark:bg-blue-800 dark:hover:bg-blue-700 text-slate-50 transition-opacity duration-500 ease-in-out ${
         isVisible
           ? 'opacity-100 pointer-events-auto'
           : 'opacity-0 pointer-events-none'
