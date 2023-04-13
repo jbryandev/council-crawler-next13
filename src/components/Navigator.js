@@ -3,11 +3,10 @@ import Menu from './Menu';
 import AgencyList from './AgencyList';
 import Button from './Button';
 import AgendaList from './AgendaList';
-import { Menu as Hamburger, ChevronLeft } from 'react-feather';
+import { ChevronLeft } from 'react-feather';
 import useOutsideDetector from '@/utils/useOutsideDetector';
 import { motion } from 'framer-motion';
 import MenuListItem from './MenuListItem';
-import { X } from 'react-feather';
 import HamburgerMenu from './HamburgerMenu';
 
 export default function Navigator({
@@ -23,9 +22,6 @@ export default function Navigator({
   const buttonRef = useRef(null);
   const agencyMenuRef = useRef(null);
   const agendaMenuRef = useRef(null);
-  const hamburgerLine = `h-[3px] w-7 my-[3px] transition ease transform duration-300 ${
-    !menuOpen ? 'bg-slate-50' : 'bg-slate-600 dark:bg-slate-300'
-  }`;
 
   useOutsideDetector((event) => {
     if (
