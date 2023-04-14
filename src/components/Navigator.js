@@ -1,7 +1,6 @@
 import { useRef, useState } from 'react';
 import Menu from './Menu';
 import AgencyList from './AgencyList';
-import Button from './Button';
 import AgendaList from './AgendaList';
 import { ChevronLeft } from 'react-feather';
 import useOutsideDetector from '@/utils/useOutsideDetector';
