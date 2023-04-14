@@ -7,7 +7,9 @@ const HamburgerMenu = forwardRef(function HamburgerMenu(
 ) {
   return (
     <Button
-      styles={`lg:hidden flex-col !bg-blue-700 ${active && '!bg-blue-700'}`}
+      styles={`lg:hidden flex-col !bg-blue-700 ${
+        active && '!bg-slate-400 dark:!bg-slate-800'
+      }`}
       active={active}
       onClick={onClick}
       ref={ref}
