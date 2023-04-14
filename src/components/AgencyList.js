@@ -18,8 +18,12 @@ export default function AgencyList({
       <MenuListItem
         active={selectedAgency === agency}
         onClick={() => {
-          setSelectedAgency(agency);
-          setActiveMenu('agenda');
+          if (agencyIdsWithAgendas.includes(agency.id)) {
+            setSelectedAgency(agency);
+            setActiveMenu('agenda');
+          } else {
+            return null;
+          }
         }}
         iconRight={agencyIdsWithAgendas.includes(agency.id) && <ChevronRight />}
         badgeValue={
