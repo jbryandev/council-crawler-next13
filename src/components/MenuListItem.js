@@ -34,7 +34,7 @@ const MenuListItem = forwardRef(function MenuListItem(
             className={`ml-5 px-2 py-1 rounded-full ${
               active
                 ? 'bg-blue-800 dark:bg-blue-900'
-                : 'bg-slate-300 lg:group-hover:bg-slate-200 dark:bg-slate-700'
+                : 'bg-slate-300 lg:group-hover:bg-slate-200 dark:bg-slate-700 lg:dark:group-hover:bg-slate-700'
             }`}
           >
             {badgeValue}
