@@ -1,23 +1,13 @@
 import { forwardRef } from 'react';
 
 const MenuListItem = forwardRef(function MenuListItem(
-  {
-    styles,
-    active = false,
-    onClick,
-    iconLeft,
-    iconRight,
-    badgeValue,
-    children,
-  },
+  { styles, active = false, onClick, iconLeft, iconRight, children },
   ref
 ) {
   return (
     <button
       className={`group flex ${
-        iconLeft || iconRight || badgeValue != undefined
-          ? 'justify-between'
-          : 'justify-center'
+        iconLeft || iconRight ? 'justify-between' : 'justify-center'
       } items-center p-5 rounded-lg cursor-pointer font-medium text-left ${
         active
           ? 'bg-blue-700 hover:bg-blue-600 dark:bg-blue-800 dark:hover:bg-blue-700 text-slate-50'
@@ -28,22 +18,7 @@ const MenuListItem = forwardRef(function MenuListItem(
     >
       {iconLeft && <div className='mr-5'>{iconLeft}</div>}
       {children}
-      <div className='flex items-center'>
-        {badgeValue != undefined && (
-          <div
-            className={`ml-5 px-2 py-1 rounded-full ${
-              active
-                ? 'bg-blue-800 dark:bg-blue-900'
-                : 'bg-slate-300 lg:group-hover:bg-slate-200 dark:bg-slate-700 lg:dark:group-hover:bg-slate-700'
-            }`}
-          >
-            {badgeValue}
-          </div>
-        )}
-        {badgeValue != undefined && (
-          <div className='ml-5 min-w-[24px]'>{iconRight}</div>
-        )}
-      </div>
+      {iconRight && <div className='ml-5'>{iconRight}</div>}
     </button>
   );
 });
