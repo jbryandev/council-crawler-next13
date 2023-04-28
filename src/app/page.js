@@ -3,12 +3,13 @@ import prisma from '@/utils/prisma';
 
 export default async function Page() {
   const agencies = await prisma.agency.findMany();
-  const agendas = await prisma.agenda.findMany();
-  const agendasWithNewLines = agendas.map((agenda) => {
+  const agendas = (await prisma.agenda.findMany()).map((agenda) => {
     return {
       ...agenda,
-      content: agenda.content.replace(/\\n/g, '\n'),
+      date: new Date(agenda.date).toLocaleDateString('en-us', {
+        dateStyle: 'long',
+      }),
     };
   });
-  return <AgendaViewer agencies={agencies} agendas={agendasWithNewLines} />;
+  return <AgendaViewer agencies={agencies} agendas={agendas} />;
 }
