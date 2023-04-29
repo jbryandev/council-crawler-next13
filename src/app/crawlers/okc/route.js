@@ -14,7 +14,7 @@ export async function GET() {
 
   // Search for a meeting matching the given committee Id
   const meeting = meetings.find((meeting) => {
-    return meeting.committeeId === 34;
+    return meeting.committeeId === 2; // OCWUT
   });
   if (!meeting) {
     return NextResponse.json({ message: 'No upcoming meetings found.' });
@@ -60,7 +60,7 @@ export async function GET() {
       content: agendaText,
       agency: {
         connect: {
-          id: '63326daba3e76095e0426add',
+          id: '63326daba3e76095e0426add', // OCWUT
         },
       },
     },
