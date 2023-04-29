@@ -1,5 +1,7 @@
 import { forwardRef } from 'react';
 
+const componentType = typeof window === 'undefined' ? 'server' : 'client';
+
 const HamburgerMenu = forwardRef(function HamburgerMenu(
   { active, onClick },
   ref
@@ -13,17 +15,17 @@ const HamburgerMenu = forwardRef(function HamburgerMenu(
     >
       <div
         className={`h-[3px] w-7 my-1 duration-500 bg-slate-50 ${
-          active && 'rotate-45 translate-y-[7px]'
+          active ? 'rotate-45 translate-y-[7px]' : undefined
         }`}
       />
       <div
         className={`h-[3px] w-7 my-1 duration-500 bg-slate-50 ${
-          active && 'opacity-0'
+          active ? 'opacity-0' : undefined
         }`}
       />
       <div
         className={`h-[3px] w-7 my-1 duration-500 bg-slate-50 ${
-          active && '-rotate-45 -translate-y-[7px]'
+          active ? '-rotate-45 -translate-y-[7px]' : undefined
         }`}
       />
     </button>
