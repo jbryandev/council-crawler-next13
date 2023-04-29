@@ -18,7 +18,7 @@ model Agenda {
   date     DateTime @db.Date
   title    String
   url      String   @unique
-  content  Json
+  content  String
   agencyId String   @db.ObjectId
   agency   Agency   @relation(fields: [agencyId], references: [id])
 }

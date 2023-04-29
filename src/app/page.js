@@ -9,6 +9,7 @@ export default async function Page() {
       date: new Date(agenda.date).toLocaleDateString('en-us', {
         dateStyle: 'long',
       }),
+      content: agenda.content.replace(/\\n/g, '\n'),
     };
   });
   return <AgendaViewer agencies={agencies} agendas={agendas} />;
