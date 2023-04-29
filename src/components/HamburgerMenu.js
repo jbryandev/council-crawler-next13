@@ -1,7 +1,5 @@
 import { forwardRef } from 'react';
 
-const componentType = typeof window === 'undefined' ? 'server' : 'client';
-
 const HamburgerMenu = forwardRef(function HamburgerMenu(
   { active, onClick },
   ref
