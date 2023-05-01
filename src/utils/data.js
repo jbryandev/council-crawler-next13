@@ -28,7 +28,7 @@ export const agencies = [
 export const agendas = [
   {
     id: 0,
-    agency: 0,
+    agencyId: 0,
     date: '3/14/23',
     title: 'Regular Meeting',
     content:
@@ -36,7 +36,7 @@ export const agendas = [
   },
   {
     id: 1,
-    agency: 1,
+    agencyId: 1,
     date: '3/10/23',
     title: 'Regular Meeting',
     content:
@@ -44,7 +44,7 @@ export const agendas = [
   },
   {
     id: 2,
-    agency: 1,
+    agencyId: 1,
     date: '3/20/23',
     title: 'Regular Meeting',
     content:
@@ -52,7 +52,7 @@ export const agendas = [
   },
   {
     id: 3,
-    agency: 0,
+    agencyId: 0,
     date: '3/1/23',
     title: 'Regular Meeting',
     content:
@@ -60,7 +60,7 @@ export const agendas = [
   },
   {
     id: 4,
-    agency: 2,
+    agencyId: 2,
     date: '3/12/23',
     title: 'Regular Meeting',
     content:
@@ -68,7 +68,7 @@ export const agendas = [
   },
   {
     id: 5,
-    agency: 3,
+    agencyId: 3,
     date: '3/1/23',
     title: 'Regular Meeting',
     content:
@@ -76,7 +76,7 @@ export const agendas = [
   },
   {
     id: 6,
-    agency: 4,
+    agencyId: 4,
     date: '3/8/23',
     title: 'Regular Meeting',
     content:
@@ -84,7 +84,7 @@ export const agendas = [
   },
   {
     id: 7,
-    agency: 5,
+    agencyId: 5,
     date: '3/1/23',
     title: 'Regular Meeting',
     content:
