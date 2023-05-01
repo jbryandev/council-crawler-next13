@@ -8,7 +8,7 @@ export default function AgencyList({
   setActiveMenu,
 }) {
   const items = agencies.map((agency) => (
-    <li key={agency.id} className='flex flex-col mt-3 first:mt-0'>
+    <li key={agency.id} className='flex flex-col mt-3 first:mt-0 w-[340px]'>
       <MenuListItem
         active={selectedAgency === agency}
         onClick={() => {

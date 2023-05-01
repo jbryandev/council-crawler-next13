@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Menu from './Menu';
 import AgencyList from './AgencyList';
 import AgendaList from './AgendaList';
@@ -7,6 +7,7 @@ import useOutsideDetector from '@/utils/useOutsideDetector';
 import { motion } from 'framer-motion';
 import MenuListItem from './MenuListItem';
 import HamburgerMenu from './HamburgerMenu';
+import { AnimatePresence } from 'framer-motion';
 
 export default function Navigator({
   agencies,
@@ -18,22 +19,21 @@ export default function Navigator({
 }) {
   const [activeMenu, setActiveMenu] = useState('agency');
   const [menuOpen, setMenuOpen] = useState(false);
+  const [currentMenuHeight, setCurrentMenuHeight] = useState(0);
+  const [newMenuHeight, setNewMenuHeight] = useState(468);
   const buttonRef = useRef(null);
-  const agencyMenuRef = useRef(null);
-  const agendaMenuRef = useRef(null);
+  const menuRef = useRef(null);
 
   useOutsideDetector((event) => {
     if (
-      buttonRef.current &&
-      !buttonRef.current.contains(event.target) &&
-      ((agencyMenuRef.current &&
-        !agencyMenuRef.current.contains(event.target)) ||
-        (agendaMenuRef.current &&
-          !agendaMenuRef.current.contains(event.target)))
+      !buttonRef.current?.contains(event.target) &&
+      !menuRef.current?.contains(event.target)
     ) {
       setMenuOpen(false);
     }
   });
+
+  function onAnimationStart() {}
 
   return (
     <>
@@ -43,47 +43,55 @@ export default function Navigator({
           onClick={() => setMenuOpen(!menuOpen)}
           ref={buttonRef}
         />
-        {menuOpen && activeMenu === 'agency' && (
-          <Menu ref={agencyMenuRef}>
-            <motion.div
-              initial={{ x: '-100%' }}
-              animate={{ x: '0%' }}
-              transition={{ duration: 0.2 }}
-            >
-              <AgencyList
-                agencies={agencies}
-                agendas={agendas}
-                selectedAgency={selectedAgency}
-                setSelectedAgency={setSelectedAgency}
-                setActiveMenu={setActiveMenu}
-              />
-            </motion.div>
-          </Menu>
-        )}
-        {menuOpen && activeMenu === 'agenda' && (
-          <Menu ref={agendaMenuRef}>
-            <motion.div
-              initial={{ x: '100%' }}
-              animate={{ x: '0%' }}
-              transition={{ duration: 0.2 }}
-            >
-              <MenuListItem
-                styles='lg:hidden mb-3'
-                onClick={() => {
-                  setActiveMenu('agency');
-                }}
-                iconLeft={<ChevronLeft />}
-              >
-                {selectedAgency.name}
-              </MenuListItem>
-              <AgendaList
-                agency={selectedAgency}
-                agendas={agendas}
-                selectedAgenda={selectedAgenda}
-                setSelectedAgenda={setSelectedAgenda}
-                setOpen={setMenuOpen}
-              />
-            </motion.div>
+        {menuOpen && (
+          <Menu ref={menuRef}>
+            <AnimatePresence>
+              {activeMenu === 'agency' && (
+                <motion.div
+                  initial={{ x: '-100%' }}
+                  animate={{ x: '0%' }}
+                  exit={{ x: '-100%' }}
+                  transition={{ duration: 0.2 }}
+                  onAnimationStart={onAnimationStart}
+                >
+                  <AgencyList
+                    agencies={agencies}
+                    agendas={agendas}
+                    selectedAgency={selectedAgency}
+                    setSelectedAgency={setSelectedAgency}
+                    setActiveMenu={setActiveMenu}
+                  />
+                </motion.div>
+              )}
+            </AnimatePresence>
+            <AnimatePresence>
+              {activeMenu === 'agenda' && (
+                <motion.div
+                  initial={{ x: '100%' }}
+                  animate={{ x: '0%' }}
+                  exit={{ x: '100%' }}
+                  transition={{ duration: 0.2 }}
+                  onAnimationStart={onAnimationStart}
+                >
+                  <MenuListItem
+                    styles='lg:hidden mb-3'
+                    onClick={() => {
+                      setActiveMenu('agency');
+                    }}
+                    iconLeft={<ChevronLeft />}
+                  >
+                    {selectedAgency.name}
+                  </MenuListItem>
+                  <AgendaList
+                    agency={selectedAgency}
+                    agendas={agendas}
+                    selectedAgenda={selectedAgenda}
+                    setSelectedAgenda={setSelectedAgenda}
+                    setOpen={setMenuOpen}
+                  />
+                </motion.div>
+              )}
+            </AnimatePresence>
           </Menu>
         )}
       </nav>
