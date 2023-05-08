@@ -1,13 +1,13 @@
 import { forwardRef } from 'react';
 
-const HamburgerMenu = forwardRef(function HamburgerMenu(
+const HamburgerButton = forwardRef(function HamburgerButton(
   { active, onClick },
   ref
 ) {
   return (
     <button
       className='lg:hidden justify-center p-5 rounded-lg cursor-pointer bg-blue-700 dark:bg-blue-800 hover:bg-blue-600 dark:hover:bg-blue-700'
-      active={active}
+      active={active ? true : undefined}
       onClick={onClick}
       ref={ref}
     >
@@ -30,4 +30,4 @@ const HamburgerMenu = forwardRef(function HamburgerMenu(
   );
 });
 
-export default HamburgerMenu;
+export default HamburgerButton;
