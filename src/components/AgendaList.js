@@ -19,7 +19,7 @@ export default function AgendaList({
         active={selectedAgenda === agenda}
         onClick={() => {
           setSelectedAgenda(agenda);
-          setOpen(false);
+          setOpen && setOpen(false);
         }}
       >
         {new Date(agenda.date).toLocaleDateString('en-us', {
