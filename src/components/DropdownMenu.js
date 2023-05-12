@@ -45,7 +45,7 @@ export default function DropdownMenu({
       {menuOpen && (
         <menu
           ref={menu}
-          className={`z-50 absolute w-[368px] top-16 p-3 mt-5 mr-3 rounded-lg drop-shadow-lg font-medium bg-slate-50 dark:bg-slate-900 overflow-hidden transition-height duration-500 ease-in-out`}
+          className={`z-50 absolute w-[368px] top-16 p-3 mt-5 mr-3 rounded-lg drop-shadow-lg font-medium bg-slate-50 dark:bg-slate-900 overflow-hidden transition-height duration-500 ease-out`}
           style={{ height: menuHeight }}
         >
           <CSSTransition
@@ -53,7 +53,7 @@ export default function DropdownMenu({
             timeout={500}
             classNames={{
               enter: 'absolute -translate-x-[110%]',
-              enterActive: 'translate-x-[0] ease-out duration-500',
+              enterActive: 'translate-x-[0%] ease-out duration-500',
               exit: 'absolute',
               exitActive: '-translate-x-[110%] ease-out duration-500',
             }}
@@ -73,7 +73,7 @@ export default function DropdownMenu({
             timeout={500}
             classNames={{
               enter: 'translate-x-[110%]',
-              enterActive: 'translate-x-[0] ease-out duration-500',
+              enterActive: 'translate-x-[0%] ease-out duration-500',
               exit: '',
               exitActive: 'translate-x-[110%] ease-out duration-500',
             }}
