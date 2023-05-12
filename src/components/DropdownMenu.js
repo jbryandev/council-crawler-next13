@@ -1,13 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import AgencyList from './AgencyList';
 import AgendaList from './AgendaList';
 import { ChevronLeft } from 'react-feather';
-import { motion } from 'framer-motion';
 import MenuListItem from './MenuListItem';
 import HamburgerButton from './HamburgerButton';
-import { AnimatePresence } from 'framer-motion';
 import useOutsideDetector from '@/utils/useOutsideDetector';
-import { LayoutGroup } from 'framer-motion';
 import { CSSTransition } from 'react-transition-group';
 
 export default function DropdownMenu({
@@ -20,11 +17,9 @@ export default function DropdownMenu({
 }) {
   const [activeMenu, setActiveMenu] = useState('agency');
   const [menuOpen, setMenuOpen] = useState(false);
-  const [menuHeight, setMenuHeight] = useState(468);
+  const [menuHeight, setMenuHeight] = useState(null);
   const button = useRef(null);
   const menu = useRef(null);
-  const agencyMenu = useRef(null);
-  const agendaMenu = useRef(null);
 
   useOutsideDetector((event) => {
     if (
@@ -36,8 +31,7 @@ export default function DropdownMenu({
   });
 
   async function calcHeight(el) {
-    const height = el.offsetHeight;
-    console.log(`${activeMenu} height is ${height}px.`);
+    const height = el.offsetHeight + 24;
     setMenuHeight(height);
   }
 
