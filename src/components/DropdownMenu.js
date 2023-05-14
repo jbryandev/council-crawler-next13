@@ -5,7 +5,6 @@ import { ChevronLeft } from 'react-feather';
 import MenuListItem from './MenuListItem';
 import HamburgerButton from './HamburgerButton';
 import useOutsideDetector from '@/utils/useOutsideDetector';
-import { CSSTransition } from 'react-transition-group';
 import { motion } from 'framer-motion';
 import { AnimatePresence } from 'framer-motion';
 
