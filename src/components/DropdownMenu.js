@@ -47,58 +47,60 @@ export default function DropdownMenu({
         ref={button}
       />
       {menuOpen && (
-        <menu
-          className={`z-50 absolute w-96 top-16 p-3 mt-5 mr-3 rounded-lg shadow-lg font-medium bg-slate-50 dark:bg-slate-900 overflow-hidden transition-height duration-300 ease-out`}
-          style={{ height: menuHeight }}
-          ref={menu}
-        >
-          <AnimatePresence>
-            {activeMenu === 'agency' && (
-              <motion.div
-                initial={{ x: '-110%' }}
-                animate={{ x: '0%' }}
-                exit={{ x: '-110%' }}
-                transition={{ duration: 0.3 }}
-                className='absolute left-3 right-3'
-              >
-                <AgencyList
-                  agencies={agencies}
-                  agendas={agendas}
-                  selectedAgency={selectedAgency}
-                  setSelectedAgency={setSelectedAgency}
-                  setActiveMenu={setActiveMenu}
-                />
-              </motion.div>
-            )}
-          </AnimatePresence>
-          <AnimatePresence>
-            {activeMenu === 'agenda' && (
-              <motion.div
-                initial={{ x: '110%' }}
-                animate={{ x: '0%' }}
-                exit={{ x: '110% ' }}
-                transition={{ duration: 0.3 }}
-              >
-                <MenuListItem
-                  styles='lg:hidden mb-3'
-                  onClick={() => {
-                    setActiveMenu('agency');
-                  }}
-                  iconLeft={<ChevronLeft />}
+        <div className='relative top-1'>
+          <menu
+            className={`z-50 absolute w-full max-w-[400px] p-3 rounded-lg shadow-lg font-medium bg-slate-50 dark:bg-slate-900 overflow-hidden transition-height duration-300 ease-out`}
+            style={{ height: menuHeight }}
+            ref={menu}
+          >
+            <AnimatePresence>
+              {activeMenu === 'agency' && (
+                <motion.div
+                  initial={{ x: '-110%' }}
+                  animate={{ x: '0%' }}
+                  exit={{ x: '-110%' }}
+                  transition={{ duration: 0.3 }}
+                  className='absolute left-3 right-3'
                 >
-                  {selectedAgency.name}
-                </MenuListItem>
-                <AgendaList
-                  agency={selectedAgency}
-                  agendas={agendas}
-                  selectedAgenda={selectedAgenda}
-                  setSelectedAgenda={setSelectedAgenda}
-                  setOpen={setMenuOpen}
-                />
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </menu>
+                  <AgencyList
+                    agencies={agencies}
+                    agendas={agendas}
+                    selectedAgency={selectedAgency}
+                    setSelectedAgency={setSelectedAgency}
+                    setActiveMenu={setActiveMenu}
+                  />
+                </motion.div>
+              )}
+            </AnimatePresence>
+            <AnimatePresence>
+              {activeMenu === 'agenda' && (
+                <motion.div
+                  initial={{ x: '110%' }}
+                  animate={{ x: '0%' }}
+                  exit={{ x: '110% ' }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <MenuListItem
+                    styles='lg:hidden mb-3'
+                    onClick={() => {
+                      setActiveMenu('agency');
+                    }}
+                    iconLeft={<ChevronLeft />}
+                  >
+                    {selectedAgency.name}
+                  </MenuListItem>
+                  <AgendaList
+                    agency={selectedAgency}
+                    agendas={agendas}
+                    selectedAgenda={selectedAgenda}
+                    setSelectedAgenda={setSelectedAgenda}
+                    setOpen={setMenuOpen}
+                  />
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </menu>
+        </div>
       )}
     </nav>
   );
