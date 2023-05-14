@@ -59,7 +59,7 @@ export default function DropdownMenu({
                 animate={{ x: '0%' }}
                 exit={{ x: '-110%' }}
                 transition={{ duration: 0.3 }}
-                className='absolute w-full pr-6'
+                className='absolute left-3 right-3'
               >
                 <AgencyList
                   agencies={agencies}
