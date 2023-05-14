@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import AgencyList from './AgencyList';
 import AgendaList from './AgendaList';
 import { ChevronLeft } from 'react-feather';
@@ -6,6 +6,8 @@ import MenuListItem from './MenuListItem';
 import HamburgerButton from './HamburgerButton';
 import useOutsideDetector from '@/utils/useOutsideDetector';
 import { CSSTransition } from 'react-transition-group';
+import { motion } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 
 export default function DropdownMenu({
   agencies,
@@ -17,7 +19,7 @@ export default function DropdownMenu({
 }) {
   const [activeMenu, setActiveMenu] = useState('agency');
   const [menuOpen, setMenuOpen] = useState(false);
-  const [menuHeight, setMenuHeight] = useState(null);
+  const [menuHeight, setMenuHeight] = useState(468);
   const button = useRef(null);
   const menu = useRef(null);
 
@@ -30,10 +32,13 @@ export default function DropdownMenu({
     }
   });
 
-  async function calcHeight(el) {
-    const height = el.offsetHeight + 24;
-    setMenuHeight(height);
-  }
+  useEffect(() => {
+    if (activeMenu === 'agency') {
+      setMenuHeight(menu.current?.firstChild.offsetHeight + 24 || 468);
+    } else if (activeMenu === 'agenda') {
+      setMenuHeight(menu.current?.lastChild.offsetHeight + 24);
+    }
+  }, [activeMenu]);
 
   return (
     <nav id='mobile' className='block lg:hidden'>
@@ -44,61 +49,56 @@ export default function DropdownMenu({
       />
       {menuOpen && (
         <menu
-          ref={menu}
-          className={`z-50 absolute w-[368px] top-16 p-3 mt-5 mr-3 rounded-lg drop-shadow-lg font-medium bg-slate-50 dark:bg-slate-900 overflow-hidden transition-height duration-500 ease-out`}
+          className={`z-50 absolute w-[368px] top-16 p-3 mt-5 mr-3 rounded-lg drop-shadow-lg font-medium bg-slate-50 dark:bg-slate-900 overflow-hidden transition-height duration-300 ease-out`}
           style={{ height: menuHeight }}
+          ref={menu}
         >
-          <CSSTransition
-            in={activeMenu === 'agency'}
-            timeout={500}
-            classNames={{
-              enter: 'absolute -translate-x-[110%]',
-              enterActive: 'translate-x-[0%] ease-out duration-500',
-              exit: 'absolute',
-              exitActive: '-translate-x-[110%] ease-out duration-500',
-            }}
-            unmountOnExit
-            onEnter={calcHeight}
-          >
-            <AgencyList
-              agencies={agencies}
-              agendas={agendas}
-              selectedAgency={selectedAgency}
-              setSelectedAgency={setSelectedAgency}
-              setActiveMenu={setActiveMenu}
-            />
-          </CSSTransition>
-          <CSSTransition
-            in={activeMenu === 'agenda'}
-            timeout={500}
-            classNames={{
-              enter: 'translate-x-[110%]',
-              enterActive: 'translate-x-[0%] ease-out duration-500',
-              exit: '',
-              exitActive: 'translate-x-[110%] ease-out duration-500',
-            }}
-            unmountOnExit
-            onEnter={calcHeight}
-          >
-            <div>
-              <MenuListItem
-                styles='lg:hidden mb-3'
-                onClick={() => {
-                  setActiveMenu('agency');
-                }}
-                iconLeft={<ChevronLeft />}
+          <AnimatePresence>
+            {activeMenu === 'agency' && (
+              <motion.div
+                initial={{ x: '-110%' }}
+                animate={{ x: '0%' }}
+                exit={{ x: '-110%' }}
+                transition={{ duration: 0.3 }}
+                className='absolute'
               >
-                {selectedAgency.name}
-              </MenuListItem>
-              <AgendaList
-                agency={selectedAgency}
-                agendas={agendas}
-                selectedAgenda={selectedAgenda}
-                setSelectedAgenda={setSelectedAgenda}
-                setOpen={setMenuOpen}
-              />
-            </div>
-          </CSSTransition>
+                <AgencyList
+                  agencies={agencies}
+                  agendas={agendas}
+                  selectedAgency={selectedAgency}
+                  setSelectedAgency={setSelectedAgency}
+                  setActiveMenu={setActiveMenu}
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
+          <AnimatePresence>
+            {activeMenu === 'agenda' && (
+              <motion.div
+                initial={{ x: '110%' }}
+                animate={{ x: '0%' }}
+                exit={{ x: '110% ' }}
+                transition={{ duration: 0.3 }}
+              >
+                <MenuListItem
+                  styles='lg:hidden mb-3'
+                  onClick={() => {
+                    setActiveMenu('agency');
+                  }}
+                  iconLeft={<ChevronLeft />}
+                >
+                  {selectedAgency.name}
+                </MenuListItem>
+                <AgendaList
+                  agency={selectedAgency}
+                  agendas={agendas}
+                  selectedAgenda={selectedAgenda}
+                  setSelectedAgenda={setSelectedAgenda}
+                  setOpen={setMenuOpen}
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
         </menu>
       )}
     </nav>
