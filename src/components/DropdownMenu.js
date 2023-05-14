@@ -18,7 +18,7 @@ export default function DropdownMenu({
 }) {
   const [activeMenu, setActiveMenu] = useState('agency');
   const [menuOpen, setMenuOpen] = useState(false);
-  const [menuHeight, setMenuHeight] = useState(468);
+  const [menuHeight, setMenuHeight] = useState(null);
   const button = useRef(null);
   const menu = useRef(null);
 
