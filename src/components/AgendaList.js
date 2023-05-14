@@ -13,7 +13,7 @@ export default function AgendaList({
   filteredAgendas.sort((a, b) => new Date(b.date) - new Date(a.date));
 
   const items = filteredAgendas.map((agenda) => (
-    <li key={agenda.id} className='flex flex-col mt-3 first:mt-0'>
+    <li key={agenda.id} className='mt-3 first:mt-0'>
       <MenuListItem
         styles='!justify-start'
         active={selectedAgenda === agenda}
