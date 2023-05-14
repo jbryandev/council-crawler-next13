@@ -48,7 +48,7 @@ export default function DropdownMenu({
       />
       {menuOpen && (
         <menu
-          className={`z-50 absolute w-[368px] top-16 p-3 mt-5 mr-3 rounded-lg drop-shadow-lg font-medium bg-slate-50 dark:bg-slate-900 overflow-hidden transition-height duration-300 ease-out`}
+          className={`z-50 absolute w-96 top-16 p-3 mt-5 mr-3 rounded-lg shadow-lg font-medium bg-slate-50 dark:bg-slate-900 overflow-hidden transition-height duration-300 ease-out`}
           style={{ height: menuHeight }}
           ref={menu}
         >
