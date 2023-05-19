@@ -49,7 +49,7 @@ export default function DropdownMenu({
       {menuOpen && (
         <div className='relative top-1'>
           <menu
-            className={`z-50 absolute w-full max-w-[400px] p-3 rounded-lg shadow-lg font-medium bg-slate-50 dark:bg-slate-900 overflow-hidden transition-height duration-200 ease-out`}
+            className={`z-50 absolute w-full max-w-[400px] p-3 rounded-lg shadow-lg font-medium bg-slate-50 dark:bg-slate-900 overflow-hidden transition-height duration-300 ease-out`}
             style={{ height: menuHeight }}
             ref={menu}
           >
@@ -59,7 +59,7 @@ export default function DropdownMenu({
                   initial={{ x: '-110%' }}
                   animate={{ x: '0%' }}
                   exit={{ x: '-110%' }}
-                  transition={{ duration: 0.2 }}
+                  transition={{ duration: 0.3 }}
                   className='absolute left-3 right-3'
                 >
                   <AgencyList
@@ -78,7 +78,7 @@ export default function DropdownMenu({
                   initial={{ x: '110%' }}
                   animate={{ x: '0%' }}
                   exit={{ x: '110% ' }}
-                  transition={{ duration: 0.2 }}
+                  transition={{ duration: 0.3 }}
                 >
                   <MenuListItem
                     styles='lg:hidden mb-3'
