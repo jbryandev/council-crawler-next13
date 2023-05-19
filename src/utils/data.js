@@ -2,26 +2,32 @@ export const agencies = [
   {
     id: 0,
     name: 'Edmond Public Works Committee',
+    slug: 'edmond',
   },
   {
     id: 1,
     name: 'Oklahoma City Water Utilities Trust',
+    slug: 'ocwut',
   },
   {
     id: 2,
     name: 'Stillwater Utilities Authority',
+    slug: 'stillwater',
   },
   {
     id: 3,
     name: 'Norman Utilities Authority',
+    slug: 'norman',
   },
   {
     id: 4,
     name: 'Broken Arrow Municipal Authority',
+    slug: 'bama',
   },
   {
     id: 5,
     name: 'Tulsa Municipal Utilities Authority',
+    slug: 'tmua',
   },
 ];
 
