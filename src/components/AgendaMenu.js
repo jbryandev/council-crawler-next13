@@ -21,19 +21,19 @@ export default function AgendaMenu({
         const variant = agenda.id === activeAgenda?.id ? 'active' : 'base';
         return (
           <li key={agenda.id}>
-            <Button
-              variant={variant}
-              iconRight={<ChevronRight />}
-              onClick={onAgendaClick}
-            >
-              <Link href={`agenda/${agenda.id}`}>
+            <Link href={`/agenda/${agenda.id}`}>
+              <Button
+                variant={variant}
+                iconRight={<ChevronRight />}
+                onClick={onAgendaClick}
+              >
                 {new Date(agenda.date)
                   .toLocaleDateString('en-us', {
                     dateStyle: 'long',
                   })
                   .toString()}
-              </Link>
-            </Button>
+              </Button>
+            </Link>
           </li>
         );
       })}
