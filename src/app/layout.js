@@ -1,18 +1,21 @@
-import BackToTop from '@/components/BackToTop';
 import './globals.css';
+import BackToTop from '@/components/BackToTop';
+import Nav from '@/components/Nav';
 
 export const metadata = {
   title: 'Council Crawler',
-  description:
-    "Tracking your favorite City Council agendas so you don't have to.",
+  description: "Tracking your favorite council agendas so you don't have to.",
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang='en' className='subpixel-antialiased dark'>
-      <body className='bg-slate-200 dark:bg-slate-900 text-slate-800 dark:text-slate-300'>
+    <html lang='en' className='subpixel-antialiased'>
+      <body className='m-3 bg-slate-200 dark:bg-slate-900 text-slate-800 dark:text-slate-300'>
         <BackToTop />
-        {children}
+        <section className='grid gap-3 mt-3 lg:grid-cols-3'>
+          <Nav />
+          <main className='lg:col-span-2'>{children}</main>
+        </section>
       </body>
     </html>
   );

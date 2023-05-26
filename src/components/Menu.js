@@ -1,14 +1,53 @@
-import { forwardRef } from 'react';
+import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { agencies, agendas } from '@/utils/data';
+import { useSelectedLayoutSegments } from 'next/navigation';
+import AgencyMenu from './AgencyMenu';
+import AgendaMenu from './AgendaMenu';
 
-const Menu = forwardRef(function Menu({ children }, ref) {
-  return (
-    <menu
-      className='z-50 w-[363px] flex absolute top-16 p-3 mt-5 mr-3 rounded-lg shadow-lg font-medium bg-slate-50 dark:bg-slate-900 overflow-hidden'
-      ref={ref}
-    >
-      {children}
-    </menu>
+export default function Menu({ setMenuOpen }) {
+  const [activeMenu, setActiveMenu] = useState('agency');
+  const [selectedAgency, setSelectedAgency] = useState(null);
+  const activeAgendaId = Number(useSelectedLayoutSegments()[1]);
+  const activeAgenda = agendas.find((agenda) => agenda.id === activeAgendaId);
+  const activeAgency = agencies.find(
+    (agency) => agency.id === activeAgenda?.agencyId
   );
-});
 
-export default Menu;
+  return (
+    <>
+      {activeMenu === 'agency' && (
+        <motion.div
+          initial={{ x: '-110%' }}
+          animate={{ x: '0%' }}
+          exit={{ x: '-110%' }}
+          transition={{ duration: 0.2 }}
+        >
+          <AgencyMenu
+            activeAgency={activeAgency}
+            setSelectedAgency={setSelectedAgency}
+            onClick={() => setActiveMenu('agenda')}
+          />
+        </motion.div>
+      )}
+      {activeMenu === 'agenda' && (
+        <motion.div
+          initial={{ x: '110%' }}
+          animate={{ x: '0%' }}
+          exit={{ x: '110% ' }}
+          transition={{ duration: 0.2 }}
+        >
+          <AgendaMenu
+            agency={selectedAgency}
+            agendas={agendas.filter(
+              (agenda) => agenda.agencyId === selectedAgency.id
+            )}
+            activeAgenda={activeAgenda}
+            onAgencyClick={() => setActiveMenu('agency')}
+            onAgendaClick={() => setMenuOpen && setMenuOpen(false)}
+          />
+        </motion.div>
+      )}
+    </>
+  );
+}

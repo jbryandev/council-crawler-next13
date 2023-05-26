@@ -41,11 +41,7 @@ export default function DropdownMenu({
 
   return (
     <nav id='mobile' className='block lg:hidden'>
-      <HamburgerButton
-        active={menuOpen}
-        onClick={() => setMenuOpen(!menuOpen)}
-        ref={button}
-      />
+      <HamburgerButton onClick={() => setMenuOpen(!menuOpen)} ref={button} />
       {menuOpen && (
         <div className='relative top-1'>
           <menu
