@@ -3,6 +3,9 @@ import Content from '@/components/Content';
 
 export default function Page({ params }) {
   const agenda = agendas.find((agenda) => agenda.id == params.agendaId);
+  if (!agenda) {
+    throw new Error('The agenda you are searching for does not exist!');
+  }
   const agency = agencies.find((agency) => agency.id === agenda.agencyId);
   const title = new Date(agenda.date).toLocaleDateString('en-us', {
     dateStyle: 'long',
