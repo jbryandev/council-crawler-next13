@@ -10,7 +10,7 @@ export default function Error({ error }) {
     <Content title={'Uh oh!'}>
       <p>{error.message}</p>
       <Link href={'/'}>
-        <Button variant='active' className='mt-5 w-48'>
+        <Button variant='active' className='mt-5 w-40'>
           Back to home
         </Button>
       </Link>
