@@ -1,5 +1,6 @@
 import './globals.css';
 import BackToTop from '@/components/BackToTop';
+import Footer from '@/components/Footer';
 import Nav from '@/components/Nav';
 
 export const metadata = {
@@ -16,6 +17,7 @@ export default function RootLayout({ children }) {
           <Nav />
           <main className='lg:col-span-2'>{children}</main>
         </section>
+        <Footer />
       </body>
     </html>
   );
