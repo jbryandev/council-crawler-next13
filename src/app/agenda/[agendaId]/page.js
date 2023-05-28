@@ -7,12 +7,12 @@ export default function Page({ params }) {
     throw new Error('The agenda you are searching for does not exist!');
   }
   const agency = agencies.find((agency) => agency.id === agenda.agencyId);
-  const title = new Date(agenda.date).toLocaleDateString('en-us', {
+  const date = new Date(agenda.date).toLocaleDateString('en-us', {
     dateStyle: 'long',
   });
 
   return (
-    <Content title={title}>
+    <Content title={date}>
       <h2 className='text-lg mb-10 opacity-75'>{agency.name}</h2>
       <p className='whitespace-pre-line text-justify max-w-prose'>
         {agenda.content}
