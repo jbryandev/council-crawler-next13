@@ -29,7 +29,7 @@ export default function MobileNav() {
         />
         {menuOpen && (
           <div className='relative top-2' ref={menuRef}>
-            <div className='z-50 absolute w-full max-w-[400px] p-3 rounded-lg shadow-lg font-medium bg-slate-50 dark:bg-slate-900 overflow-hidden transition-height duration-300 ease-out'>
+            <div className='z-50 absolute w-full max-w-[400px] p-3 rounded-lg shadow-lg font-medium bg-slate-50 dark:bg-slate-900 overflow-hidden'>
               <Menu setMenuOpen={setMenuOpen} />
             </div>
           </div>

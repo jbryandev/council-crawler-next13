@@ -20,7 +20,6 @@ export default function Menu({ setMenuOpen }) {
         <motion.div
           initial={{ x: '-110%' }}
           animate={{ x: '0%' }}
-          exit={{ x: '-110%' }}
           transition={{ duration: 0.2 }}
         >
           <AgencyMenu
@@ -34,7 +33,6 @@ export default function Menu({ setMenuOpen }) {
         <motion.div
           initial={{ x: '110%' }}
           animate={{ x: '0%' }}
-          exit={{ x: '110% ' }}
           transition={{ duration: 0.2 }}
         >
           <AgendaMenu
