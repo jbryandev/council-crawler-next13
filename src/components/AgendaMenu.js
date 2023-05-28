@@ -10,6 +10,8 @@ export default function AgendaMenu({
   onAgencyClick,
   onAgendaClick,
 }) {
+  agendas.sort((a, b) => new Date(b.date) - new Date(a.date));
+
   return (
     <ul className='flex flex-col space-y-3'>
       <li key={agency.id}>
