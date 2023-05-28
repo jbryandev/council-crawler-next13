@@ -1,29 +1,28 @@
-// import AgendaViewer from '@/components/AgendaViewer';
 // import prisma from '@/utils/prisma';
 import { agencies, agendas } from '@/utils/data';
 
 import Content from '@/components/Content';
 import Link from 'next/link';
-import Button from '@/components/Button';
-import { ChevronRight } from 'react-feather';
 
 export default async function Page() {
   agendas.sort((a, b) => new Date(b.date) - new Date(a.date));
   const latestAgendas = agendas.slice(0, 5);
 
   return (
-    <Content title='Latest Agendas'>
-      <ul className='flex flex-col space-y-3 mt-5'>
+    <Content title='Recent Agendas'>
+      <ul className='flex flex-col space-y-5 mt-10'>
         {latestAgendas.map((agenda) => {
           const agency = agencies.find(
             (agency) => agency.id === agenda.agencyId
           );
+          const date = new Date(agenda.date).toLocaleDateString('en-us', {
+            dateStyle: 'long',
+          });
           return (
-            <li key={agenda.id}>
+            <li key={agenda.id} className='hover:opacity-75'>
               <Link href={`/agenda/${agenda.id}`}>
-                <Button iconRight={' '}>
-                  {agenda.date} - {agency.name}
-                </Button>
+                <h2 className='text-lg font-medium'>{date}</h2>
+                <h3 className='text-md opacity-75'>{agency.name}</h3>
               </Link>
             </li>
           );
@@ -41,5 +40,4 @@ export default async function Page() {
   //     content: agenda.content.replace(/\\n/g, '\n'),
   //   };
   // });
-  // return <AgendaViewer agencies={agencies} agendas={agendas} />;
 }
