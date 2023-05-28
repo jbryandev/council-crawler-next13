@@ -4,7 +4,7 @@ import prisma from '@/utils/prisma';
 
 // External API endpoints from OKC agenda management system
 const mainUrl = 'https://okc.primegov.com/';
-// const committeesUrl = `${mainUrl}api/committee/GetCommitteeesListByShowInPublicPortal`;
+const committeesUrl = `${mainUrl}api/committee/GetCommitteeesListByShowInPublicPortal`;
 const meetingsUrl = `${mainUrl}api/v2/PublicPortal/ListUpcomingMeetings?_=1664477923943`;
 const agendaUrl = `${mainUrl}Portal/Meeting?meetingTemplateId=`;
 
