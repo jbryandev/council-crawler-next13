@@ -5,7 +5,7 @@ import useOutsideDetector from '@/utils/useOutsideDetector';
 import HamburgerButton from './HamburgerButton';
 import Menu from './Menu';
 
-export default function MobileNav() {
+export default function Nav() {
   const [menuOpen, setMenuOpen] = useState(false);
   const buttonRef = useRef(null);
   const menuRef = useRef(null);
