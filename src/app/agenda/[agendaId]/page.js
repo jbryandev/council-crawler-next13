@@ -1,7 +1,9 @@
-import { agencies, agendas } from '@/utils/data';
+import prisma from '@/utils/prisma';
 import Content from '@/components/Content';
 
-export default function Page({ params }) {
+export default async function Page({ params }) {
+  const agencies = await prisma.agency.findMany();
+  const agendas = await prisma.agenda.findMany();
   const agenda = agendas.find((agenda) => agenda.id == params.agendaId);
   if (!agenda) {
     throw new Error('The agenda you are searching for does not exist!');

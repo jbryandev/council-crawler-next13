@@ -1,8 +1,8 @@
 import { ChevronRight } from 'react-feather';
-import { agencies } from '@/utils/data';
 import Button from './Button';
 
 export default function AgencyMenu({
+  agencies,
   activeAgency,
   setSelectedAgency,
   onClick,
