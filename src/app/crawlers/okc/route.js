@@ -8,7 +8,7 @@ const committeesUrl = `${mainUrl}api/committee/GetCommitteeesListByShowInPublicP
 const meetingsUrl = `${mainUrl}api/v2/PublicPortal/ListUpcomingMeetings?_=1664477923943`;
 const agendaUrl = `${mainUrl}Portal/Meeting?meetingTemplateId=`;
 
-export async function GET() {
+export async function crawl() {
   // Get list of upcoming meetings
   const meetings = await fetch(meetingsUrl).then((res) => res.json());
 
@@ -65,6 +65,9 @@ export async function GET() {
       },
     },
   });
-
   return NextResponse.json({ newAgenda });
+}
+
+export async function GET() {
+  return crawl();
 }
