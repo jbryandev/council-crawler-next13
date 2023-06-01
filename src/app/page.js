@@ -5,8 +5,10 @@ import Link from 'next/link';
 export default async function Page() {
   const agencies = await prisma.agency.findMany();
   const agendas = await prisma.agenda.findMany();
-  agendas.sort((a, b) => new Date(b.date) - new Date(a.date));
-  const latestAgendas = agendas.slice(0, 5);
+  const sortedAgendas = agendas.sort(
+    (a, b) => new Date(b.date) - new Date(a.date)
+  );
+  const latestAgendas = sortedAgendas.slice(0, 5);
 
   return (
     <Content title='Recent Agendas'>
