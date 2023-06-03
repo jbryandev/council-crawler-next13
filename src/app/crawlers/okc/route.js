@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { convert } from 'html-to-text';
-import prisma from '@/utils/prisma';
+import { createAgenda, getAgendaByUrl } from '@/utils/agenda';
 
 // External API endpoints from OKC agenda management system
 const mainUrl = 'https://okc.primegov.com/';
@@ -31,9 +31,7 @@ export async function crawl() {
     const agendaPath = `${agendaUrl}${agenda.templateId}`;
 
     // Make sure the agenda doesn't already exist in the db
-    const existingAgenda = await prisma.agenda.findUnique({
-      where: { url: agendaPath },
-    });
+    const existingAgenda = await getAgendaByUrl(agendaPath);
     if (existingAgenda) {
       return NextResponse.json({ message: 'Meeting already exists.' });
     }
@@ -53,7 +51,7 @@ export async function crawl() {
     });
 
     // Add the agenda to the db
-    const newAgenda = await prisma.agenda.create({
+    const newAgenda = await createAgenda({
       data: {
         date: new Date(meeting.date).toISOString(),
         title: meeting.title,
@@ -66,9 +64,9 @@ export async function crawl() {
         },
       },
     });
-    return NextResponse.json({ newAgenda });
+    return NextResponse.json({ message: 'Agenda created.', newAgenda });
   } catch (error) {
-    return NextResponse.json({ error });
+    return NextResponse.json({ error: error.message });
   }
 }
 

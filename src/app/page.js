@@ -1,22 +1,16 @@
-import prisma from '@/utils/prisma';
 import Content from '@/components/Content';
+import { getAgencyById } from '@/utils/agency';
+import { getAllAgendas } from '@/utils/agenda';
 import Link from 'next/link';
 
 export default async function Page() {
-  const agencies = await prisma.agency.findMany();
-  const agendas = await prisma.agenda.findMany();
-  const sortedAgendas = agendas.sort(
-    (a, b) => new Date(b.date) - new Date(a.date)
-  );
-  const latestAgendas = sortedAgendas.slice(0, 5);
+  const lastFiveAgendas = (await getAllAgendas()).slice(0, 5);
 
   return (
     <Content title='Recent Agendas'>
       <ul className='flex flex-col space-y-5 mt-10'>
-        {latestAgendas.map((agenda) => {
-          const agency = agencies.find(
-            (agency) => agency.id === agenda.agencyId
-          );
+        {lastFiveAgendas.map(async (agenda) => {
+          const agency = await getAgencyById(agenda.agencyId);
           const date = new Date(agenda.date).toLocaleDateString('en-us', {
             dateStyle: 'long',
           });

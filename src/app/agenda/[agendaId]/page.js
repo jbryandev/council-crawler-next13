@@ -1,14 +1,15 @@
-import prisma from '@/utils/prisma';
 import Content from '@/components/Content';
+import { getAgencyById } from '@/utils/agency';
+import { getAgendaById } from '@/utils/agenda';
 
 export default async function Page({ params }) {
-  const agencies = await prisma.agency.findMany();
-  const agendas = await prisma.agenda.findMany();
-  const agenda = agendas.find((agenda) => agenda.id == params.agendaId);
+  const agenda = await getAgendaById(params.agendaId);
+
   if (!agenda) {
     throw new Error('The agenda you are searching for does not exist!');
   }
-  const agency = agencies.find((agency) => agency.id === agenda.agencyId);
+  const agency = await getAgencyById(agenda.agencyId);
+
   const date = new Date(agenda.date).toLocaleDateString('en-us', {
     dateStyle: 'long',
   });

@@ -1,8 +1,9 @@
 import './globals.css';
-import prisma from '@/utils/prisma';
 import BackToTop from '@/components/BackToTop';
 import Footer from '@/components/Footer';
 import Nav from '@/components/Nav';
+import { getAllAgencies } from '@/utils/agency';
+import { getAllAgendas } from '@/utils/agenda';
 
 export const metadata = {
   title: 'Council Crawler',
@@ -10,8 +11,8 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }) {
-  const agencies = await prisma.agency.findMany();
-  const agendas = await prisma.agenda.findMany();
+  const agencies = await getAllAgencies();
+  const agendas = await getAllAgendas();
 
   return (
     <html lang='en' className='subpixel-antialiased'>
